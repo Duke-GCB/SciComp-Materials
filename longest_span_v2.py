@@ -15,7 +15,7 @@ def parse_bed(bed_string):
         print "Bad data!"
     else:
         chrom_span = chrom_end - chrom_start
-        print "Chrom: %s, Span %d" % (chrom, chrom_span)
+        print 'Chrom: {}, Span {}'.format(chrom, chrom_span)
 
 parse_bed(bed_string)
 

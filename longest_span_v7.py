@@ -16,7 +16,7 @@ def parse_bed(bed_string):
 
 def print_bed(bed_dict):
     if bed_dict is not None:
-        print "Chrom: %s, Start %d, End %d, Span %d" % (bed_dict['chrom'], bed_dict['start'], bed_dict['end'], bed_dict['span'])
+        print 'Chrom: {}, Start {}, End {}, Span {}'.format(bed_dict['chrom'], bed_dict['start'], bed_dict['end'], bed_dict['span'])
     else:
         print "Bad data!"
 

@@ -11,9 +11,9 @@ chrom_end = int(bed_list[2])
 
 # Checking
 if chrom_start > chrom_end or chrom_start < 0:
-    print "Bad data!"
+    print 'Bad data!'
 else:
     # Calculating
     chrom_span = chrom_end - chrom_start
-    print "Chrom: %s, Span %d" % (chrom, chrom_span)
+    print 'Chrom: {}, Span {}'.format(chrom, chrom_span)
 
