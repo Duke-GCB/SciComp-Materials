@@ -3,9 +3,9 @@
 # Input Data
 bed_string = 'chr1 6 12'
 
-# parse_chrom(bed_string)
+# parse_bed(bed_string)
 
-def parse_chrom(bed_string):
+def parse_bed(bed_string):
     bed_list = bed_string.split()
     chrom = bed_list[0]
     chrom_start = int(bed_list[1])
@@ -17,8 +17,8 @@ def parse_chrom(bed_string):
         chrom_span = chrom_end - chrom_start
         print "Chrom: %s, Span %d" % (chrom, chrom_span)
 
-parse_chrom(bed_string)
+parse_bed(bed_string)
 
 # Add these later
-parse_chrom('chr2 12 23')
-parse_chrom('chrX 98 45')
+parse_bed('chr2 12 23')
+parse_bed('chrX 98 45')
