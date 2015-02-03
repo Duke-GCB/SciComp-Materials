@@ -54,7 +54,7 @@ How many lines? The `wc` command gives us words, characters, and lines in a file
 
      $ wc -l wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements
      
-If we wanted to ask the same question for all of the files, we can use the wildcard to expand:
+If we wanted to ask the same question for all of the files, we can use a **wildcard** to expand:
 
 	$ ls -lh wg*
 	$ wc -l wg*
@@ -62,25 +62,43 @@ If we wanted to ask the same question for all of the files, we can use the wildc
 The wildcard works at any position in the filename:
 
     $ wc -l *.bed*
-    
-What if wanted a small subsection of the file (for example, to do a test analysis):
+        
+These are big files! What if wanted a small subsection of the file (for example, to do a test analysis):
 
-    $ head -n 100 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements
-    
-To save this to a file, we can redirect the output into a file rather than to the screen:
+	$ head -n 100 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements
 
-    $ head -n 100 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements > small.bed
-    
-The bed files are formatted with multiple columns. In addition to filtering rows, we can also filter columns. The `cut` command can extract only specific columns. Let's look at the man page for `cut`:
+The bed files are formatted with multiple columns. We can filter out specific columns using the `cut` command. Let's look at the man page for `cut`:
 
     $ man cut
 
 There are three options that we need to provide: the fields to cut, the character (delimiter) that separates columns and the input file. The default delimiter is TAB, which is what we have, so we can ignore that option. 
 
-   $ cut -f 1-3  wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements
+    $ cut -f 1-3  wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements
 
-**Excercise** : Create a small sample file named "sample_file.bed"of just the first 200 lines, including everything except the 4th column.
+## Extracting subsets of a file
 
+To save this output to a file, we can **redirect** the output into a file rather than to the screen:
+
+	$ cut -f 1-3 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements > small.bed
+
+***Excercise*** : Create a small sample file named "sample_file.bed", including the first 200 lines and all columns except 4th column. *Hint*: This will take two separate steps and involve creating a temporary file. 
+
+We've introduced **wildcards** to operate on files that match a patters and **redirection** to save output to a file instead of the screen. The final concept in this section is combining commands using **pipes**.
+
+The power of the shell comes from the vast number of commands that do a small thing really well and the fact that we can combine these small programs into pipelines that do complex things. 
+
+Let's check the number of chromosomes in the file. The first column contains the chromosomes:
+
+	$ cut -f1 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements
+
+The `uniq` command will print out unique elements in the input. We could save column 1 to a file and then run uniq, but it is shorter to simply *pipe* the output from the first command as input into the second command:
+
+	$ cut -f1 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements | uniq
+
+The `uniq` command looks for runs of identical elements. Let's sort the list first before running `uniq`. Bash has a command for that, and we can chain together multiple commands using `|`. 
+
+	$ cut -f1 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements | sort | uniq 
+	
 ## Finding things in files and directories 
 
 use grep to find information about specific chromosomes in the file
@@ -91,6 +109,8 @@ use find + grep to find all of the python files that use the BeautifulSoup libra
 
 ## Loops
 use a loop to create a separate file for each chromosome in the input file, using bash and redirection
+
+Bonus: use a loop to do this for every file
 
 
 
