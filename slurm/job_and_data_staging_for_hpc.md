@@ -66,6 +66,39 @@ netid@dscr-slogin-01 ~ $ srun --mem=256 --pty bash -i
 
 ##### Partitions
 
+* Classes of compute nodes
+* Denote ownership
+* It's all up to the HPC admins
+* How to show partition information
+
 ```bash
+sinfo
+```
+
+##### Node states
+* alloc - node is 
+```ALLOCATED
+    The node has been allocated to one or more jobs. 
+   COMPLETING
+    All jobs associated with this node are in the process of COMPLETING. This node state will be removed when all of the job's processes have terminated and the SLURM epilog program (if any) has terminated. See the Epilog parameter description in the slurm.conf man page for more information. 
+   DOWN
+    The node is unavailable for use. SLURM can automatically place nodes in this state if some failure occurs. System administrators may also explicitly place nodes in this state. If a node resumes normal operation, SLURM can automatically return it to service. See the ReturnToService and SlurmdTimeout parameter descriptions in the slurm.conf(5) man page for more information. 
+   DRAINED
+    The node is unavailable for use per system administrator request. See the update node command in the scontrol(1) man page or the slurm.conf(5) man page for more information. 
+   DRAINING
+    The node is currently executing a job, but will not be allocated to additional jobs. The node state will be changed to state DRAINED when the last job on it completes. Nodes enter this state per system administrator request. See the update node command in the scontrol(1) man page or the slurm.conf(5) man page for more information. 
+   FAIL
+    The node is expected to fail soon and is unavailable for use per system administrator request. See the update node command in the scontrol(1) man page or the slurm.conf(5) man page for more information. 
+   FAILING
+    The node is currently executing a job, but is expected to fail soon and is unavailable for use per system administrator request. See the update node command in the scontrol(1) man page or the slurm.conf(5) man page for more information. 
+   IDLE
+    The node is not allocated to any jobs and is available for use. 
+   MAINT
+    The node is currently in a reservation with a flag value of "maintainence". 
+   UNKNOWN
+    The SLURM controller has just started and the node's state has not yet been determined. 
+```
+```bash
+
 /opt/apps/bedtools2-2.19.1/bin/bedtools
 ```
