@@ -41,7 +41,7 @@ def parse_record(record_string):
             if match.group(m)[0:3] in month_conversions.keys():
                 month = month_conversions[match.group(m)[0:3]]
             else:
-                month = int(match.group(m))
+                month = match.group(m)
             
             return [
                 match.group(y), 

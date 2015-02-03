@@ -5,26 +5,13 @@ def parse_record(record_string):
     '''
     Return formatted data record as (Y, M, D, site, value) or None
     '''
-    month_conversions = {
-        "Jan": 1,
-        "Feb": 2,
-        "Mar": 3,
-        "Apr": 4,
-        "Jun": 5,
-        "Jul": 7,
-        "Aug": 8,
-        "Sep": 9,
-        "Oct": 10,
-        "Nov": 11,
-        "Dec": 12
-    }
 
     # each pattern is a tuple, with the regex as the first value, 
     # then the matches in the order we would like:
     # year, month, day, site, value
     patterns = [
         ( 
-            '(.*)\t(20\d\d)-(\d\d)-(\d\d)\t(\d+\.?\d*)',
+            '^(.*)\t(20\d\d)-(\d\d)-(\d\d)\t(\d+\.?\d*)$',
             2, 3, 4, 1, 5
         )
     ]
@@ -33,12 +20,13 @@ def parse_record(record_string):
         match = re.search(pattern, record_string)
         if match:
             return [
-                int(match.group(y)), 
-                int(match.group(m)), 
-                int(match.group(d)), 
+                match.group(y), 
+                match.group(m), 
+                match.group(d), 
                 match.group(s), 
-                float(match.group(v))
+                match.group(v)
             ]
+    
     return None
 
 for line in fileinput.input():
