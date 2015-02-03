@@ -95,26 +95,89 @@ The `uniq` command will print out unique elements in the input. We could save co
 
 	$ cut -f1 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements | uniq
 
-The `uniq` command looks for runs of identical elements. Let's sort the list first before running `uniq`. Bash has a command for that, and we can chain together multiple commands using `|`. 
+The `uniq` command looks for runs of identical elements. Let's `sort` the list first before running `uniq`. Bash has a command for that, and we can chain together multiple commands using `|`. 
 
 	$ cut -f1 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements | sort | uniq 
-	
+
+
 ## Finding things in files and directories 
 
-use grep to find information about specific chromosomes in the file
+Use `grep` to find information about specific chromosomes in the file. We can output the contents of the file to the screen, and then search that output for lines that match chromosome X.
 
+	$ cat wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements | grep chrX
+
+***Exercise***: Do the same for chromosome 1. What happens?
+
+We can use more complex patterns with `grep` (and other tools) by using *regular expressions*. For example, to find both chromosome X and Y:
+
+	$ cat wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements | grep chr[XY]
+
+If we want to be sure that we are ignoring lines that might  
 use find to locate all of the .csv files in your home directory
  
 use find + grep to find all of the python files that use the BeautifulSoup library
 
 ## Loops
-use a loop to create a separate file for each chromosome in the input file, using bash and redirection
 
-Bonus: use a loop to do this for every file
+Perhaps we want to extract only the information for the X chromosome from every file. We therefore want to repeat the same command multiple times with different input. 
 
+	$ for i in 1 2 3 B B 4
+	> do
+	> echo $i
+	> done
 
+We have created a *variable* i and a list [1,2,3,4]. For each element in the list, we assign i=element_in_list and then do something with that variable (in this case, simply print it to the screen using `echo`). Note that we use `$` to refer to a variable once we have defined it.
 
+Use the up arrow to see how bash represents a loop on one line. 
 
+	$ for c in X Y
+	> do
+	> echo $c
+	> done
 
+We can modify the body of the loop (what's between `do` and `done`) to run a different command, or multiple commands, on each file. 
 
+	$ for c in X Y
+	> do
+	> echo $c
+	> echo chromosome$c.bed
+	> head n -1 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements
+	> done
 
+***Exercise***: Modify the loop to use the `grep` example from above to print the data from the X and Y chromosomes to two new files. 
+
+## Putting actions in scripts
+
+Copy that last command to the clipboard. Then, create and open a new text file. The `nano` editor is a simple text editor that allows you to edit files from the bash shell, without opening up a graphical editor.
+
+	$ nano get_X_data.sh
+
+Run the script using:
+
+	$ bash get_X_data.sh
+
+If we wanted to do the same thing for another input file, we would need to edit the script and change the filename. What if we had hundreds or thousands of input files? We can pass the filename into the script as an *argument*:
+
+	$ bash get_X_data.sh my_input_file.bed
+
+There are various ways to access the command line arguments. We are going to show you the simplest way, but one that doesn't do any error checking or allow for fancy features. In a script:
+
+   ```
+   echo $0  # prints the name of the script
+   echo $1  # prints the first argument
+   echo $2  # prints the second argument
+   ```
+   
+The following script will take the filename from the command line:
+
+```
+inputfile=$1
+for c in X Y
+do 
+        echo chrosome$c
+        echo intputfile: $inputfile
+        echo outputfile: $inputfile.chr$c
+done
+```
+
+***Exercise***: Modify this script to print the data for the specified chromsome from the input file to the output file
