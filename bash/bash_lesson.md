@@ -1,20 +1,22 @@
 This lesson instroduces intermediate bash skills to learners who have some familiarity with the shell. 
 
-# Concepts to cover
+# Concepts covered
 
-* contents of files: head, tail, cut
+* exploring the contents of files using basic bash commands
 * using wildcards and simple regex for pattern matching
 * redirecting ouput
-* pipes
+* using pipe to chain commands together
 * finding things: in files (grep) and across filesystem (find)
 * writing and running a simple bash script
+
+Things not yet covered
+
 * moving data between computers: scp and rsync
 * file permissions
 * good practices for organizing files and directories
 
 # Assumptions
 We assume that learners:
-
 
 1. understand the difference between a command-line interface and a graphical user interface
 1. can open a bash shell on their computer
@@ -95,7 +97,7 @@ The `uniq` command will print out unique elements in the input. We could save co
 
 	$ cut -f1 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements | uniq
 
-The `uniq` command looks for runs of identical elements. Let's `sort` the list first before running `uniq`. Bash has a command for that, and we can chain together multiple commands using `|`. 
+The `uniq` command looks for runs of identical elements. Let's `sort` the list first before running `uniq`. Bash has a command for that, and we can chain together multiple commands using `|` (*pipe*). 
 
 	$ cut -f1 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements | sort | uniq 
 
