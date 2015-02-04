@@ -1,4 +1,4 @@
-# longest_span_v5.py
+# longest_span_v6.py
 
 import fileinput
 
@@ -20,5 +20,29 @@ def print_bed(bed_dict):
     else:
         print "Bad data!"
 
+def is_longest_span(bed_dict, longest_spans):
+  if bed_dict is None:
+    return False
+  chrom = bed_dict['chrom']
+  span = bed_dict['span']
+  if chrom not in longest_spans:
+    return True
+  elif span > longest_spans[chrom]['span']:
+    return True
+  else:
+    return False
+    
+def set_longest_span(bed_dict, longest_spans):
+  chrom = bed_dict['chrom']
+  longest_spans[chrom] = bed_dict
+
+# Main functionality
+longest_spans = dict()
 for line in fileinput.input():
-    print_bed(parse_bed(line))
+    bed_dict = parse_bed(line)
+    if is_longest_span(bed_dict, longest_spans):
+      set_longest_span(bed_dict, longest_spans)
+
+# Now print!
+for chrom in longest_spans:
+  print_bed(longest_spans[chrom])
