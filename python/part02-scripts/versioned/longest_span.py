@@ -1,6 +1,6 @@
-# longest_span_v4.py
+# longest_span_v5.py
 
-import sys
+import fileinput
 
 def parse_bed(bed_string):
     bed_list = bed_string.split()
@@ -20,5 +20,5 @@ def print_bed(bed_dict):
     else:
         print "Bad data!"
 
-for line in sys.stdin:
+for line in fileinput.input():
     print_bed(parse_bed(line))
