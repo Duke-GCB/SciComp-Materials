@@ -1,2 +1,2 @@
 # GCB-Academy-2015-02-05
-GCB Academy course materials
+Data for GCB Academy Introduction to Scientific Computing for Genomics course
