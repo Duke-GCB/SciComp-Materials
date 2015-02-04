@@ -1,4 +1,4 @@
-# longest_span_v2.py
+# longest_span_v3.py
 
 # Input Data
 bed_string = 'chr1 6 12'
@@ -12,13 +12,19 @@ def parse_bed(bed_string):
     chrom_end = int(bed_list[2])
 
     if chrom_start > chrom_end or chrom_start < 0:
-        print "Bad data!"
+        return None
     else:
         chrom_span = chrom_end - chrom_start
-        print 'Chrom: {}, Span {}'.format(chrom, chrom_span)
+        return {'chrom': chrom, 'span': chrom_span}
 
-parse_bed(bed_string)
+def print_bed(bed_dict):
+    if bed_dict is not None:
+        print 'Chrom: {}, Span {}'.format(bed_dict['chrom'], bed_dict['span'])
+    else:
+        print "Bad data!"
+    
+print_bed(parse_bed(bed_string))
 
-# Add these later
-parse_bed('chr2 12 23')
-parse_bed('chrX 98 45')
+print_bed(parse_bed('chr2 12 23'))
+print_bed(parse_bed('chrX 98 45'))
+print bed_string
