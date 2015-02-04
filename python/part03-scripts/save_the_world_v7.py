@@ -5,7 +5,7 @@ def parse_record(record_string):
     '''
     Return formatted data record as (Y, M, D, site, value) or None
     '''
-
+    
     # Save patterns in a dictionary. For each pattern:
     #   - key is the regex string
     #   - value is the field order in a list. 
@@ -13,7 +13,7 @@ def parse_record(record_string):
     #   - year, month, day, site, value
     patterns = {
         '^(.*)\s+(20\d\d)-(\d\d)-(\d\d)\s+(\d+\.?\d*)$': [2, 3, 4, 1, 5],
-        '^(.*)/(\w+)\s*(\d+),?\s*(20\d\d)/(\d+\.?\d*)$': [4, 2, 3, 1, 5]
+        '^([\w|\s]+)/(\w+)\s*(\d+),?\s*(20\d\d)/(\d+\.?\d*)$': [4, 2, 3, 1, 5]
     }
     
     month_conversions = {
@@ -49,13 +49,12 @@ def parse_record(record_string):
     
     return None
 
+output = open('output.csv', 'w')
+
 for line in fileinput.input():
     if fileinput.isfirstline():
         continue
-
     fields = parse_record(line)
-
     if fields:
-        print ",".join(fields)
-    else:
-        print "Line {} did not match!".format(fileinput.lineno())
+        formatted_line = ','.join(fields)
+        output.write(formatted_line + '\n')

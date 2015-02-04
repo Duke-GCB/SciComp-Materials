@@ -17,18 +17,18 @@ def parse_record(record_string):
     }
     
     month_conversions = {
-        "Jan": 1,
-        "Feb": 2,
-        "Mar": 3,
-        "Apr": 4,
-        "May": 5,
-        "Jun": 6,
-        "Jul": 7,
-        "Aug": 8,
-        "Sep": 9,
-        "Oct": 10,
-        "Nov": 11,
-        "Dec": 12
+        "Jan": '01',
+        "Feb": '02',
+        "Mar": '03',
+        "Apr": '04',
+        "May": '05',
+        "Jun": '06',
+        "Jul": '07',
+        "Aug": '08',
+        "Sep": '09',
+        "Oct": '10',
+        "Nov": '11',
+        "Dec": '12'
     }
     
     for pattern, order_list in patterns.items():
@@ -37,24 +37,25 @@ def parse_record(record_string):
             if match.group(order_list[1])[0:3] in month_conversions.keys():
                 month = month_conversions[match.group(order_list[1])[0:3]]
             else:
-                month = int(match.group(order_list[1]))
+                month = match.group(order_list[1])
             
             return [
-                int(match.group(order_list[0])),   # year
-                month,                             # month
-                int(match.group(order_list[2])),   # day
-                match.group(order_list[3]),        # site
-                float(match.group(order_list[4]))  # value
+                match.group(order_list[0]),  # year
+                month,                       # month
+                match.group(order_list[2]),  # day
+                match.group(order_list[3]),  # site
+                match.group(order_list[4])   # value
             ]
     
     return None
 
-output = open('output.csv', 'w')
-
 for line in fileinput.input():
     if fileinput.isfirstline():
         continue
+
     fields = parse_record(line)
+
     if fields:
-        formatted_line = ','.join([str(f) for f in fields])
-        output.write(formatted_line + '\n')
+        print ",".join(fields)
+    else:
+        print "Line {} did not match!".format(fileinput.lineno())
