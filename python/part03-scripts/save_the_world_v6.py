@@ -49,13 +49,14 @@ def parse_record(record_string):
     
     return None
 
+output = open('output.csv', 'w')
+
 for line in fileinput.input():
     if fileinput.isfirstline():
         continue
-
+    
     fields = parse_record(line)
-
+    
     if fields:
-        print ",".join(fields)
-    else:
-        print "Line {} did not match!".format(fileinput.lineno())
+        formatted_line = ','.join(fields)
+        output.write(formatted_line + '\n')

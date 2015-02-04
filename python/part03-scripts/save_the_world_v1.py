@@ -2,7 +2,7 @@ import fileinput
 import re
 
 for line in fileinput.input():
-    match = re.search('^(.*)\s+(20\d\d)-(\d\d)-(\d\d)\s+(\d+\.?\d*)$', line)
+    match = re.search('^(\w+)\s+(20\d\d)-(\d\d)-(\d\d)\s+(\d+\.?\d*)$', line)
     
     if match:
         fields = [

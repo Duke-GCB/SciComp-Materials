@@ -6,25 +6,16 @@ def parse_record(record_string):
     Return formatted data record as (Y, M, D, site, value) or None
     '''
 
-    # Save patterns in a dictionary. For each pattern:
-    #   - key is the regex string
-    #   - value is the field order in a list. 
-    # The value list field order is:
-    #   - year, month, day, site, value
-    patterns = {
-        '^(\w+)\s+(20\d\d)-(\d\d)-(\d\d)\s+(\d+\.?\d*)$': [2, 3, 4, 1, 5],
-    }
+    match = re.search('^(\w+)\s+(20\d\d)-(\d\d)-(\d\d)\s+(\d+\.?\d*)$', record_string)
     
-    for pattern, order_list in patterns.items():
-        match = re.search(pattern, record_string)
-        if match:
-            return [
-                match.group(order_list[0]),  # year
-                match.group(order_list[1]),  # month
-                match.group(order_list[2]),  # day
-                match.group(order_list[3]),  # site
-                match.group(order_list[4])   # value
-            ]
+    if match:
+        return [
+            match.group(2),  # year
+            match.group(3),  # month
+            match.group(4),  # day
+            match.group(1),  # site
+            match.group(5)   # value
+        ]
     
     return None
 
