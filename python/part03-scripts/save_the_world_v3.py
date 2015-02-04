@@ -20,11 +20,11 @@ def parse_record(record_string):
         match = re.search(pattern, record_string)
         if match:
             return [
-                match.group(order_list[0]), 
-                match.group(order_list[1]), 
-                match.group(order_list[2]), 
-                match.group(order_list[3]), 
-                match.group(order_list[4])
+                match.group(order_list[0]),  # year
+                match.group(order_list[1]),  # month
+                match.group(order_list[2]),  # day
+                match.group(order_list[3]),  # site
+                match.group(order_list[4])   # value
             ]
     
     return None
