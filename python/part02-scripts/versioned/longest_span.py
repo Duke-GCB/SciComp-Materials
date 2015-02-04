@@ -1,9 +1,6 @@
-# longest_span_v3.py
+# longest_span_v4.py
 
-# Input Data
-bed_string = 'chr1 6 12'
-
-# parse_bed(bed_string)
+import sys
 
 def parse_bed(bed_string):
     bed_list = bed_string.split()
@@ -22,9 +19,6 @@ def print_bed(bed_dict):
         print 'Chrom: {}, Span {}'.format(bed_dict['chrom'], bed_dict['span'])
     else:
         print "Bad data!"
-    
-print_bed(parse_bed(bed_string))
 
-print_bed(parse_bed('chr2 12 23'))
-print_bed(parse_bed('chrX 98 45'))
-print bed_string
+for line in sys.stdin:
+    print_bed(parse_bed(line))
