@@ -16,14 +16,7 @@ subtitle: A Better Kind of Backup
 >     and explain why it is sometimes useful to do so.
 
 We'll start by exploring how version control can be used
-to keep track of what one person did and when.
-Even if you aren't collaborating with other people,
-version control is much better for this than this:
-
-<div>
-  <a href="http://www.phdcomics.com"><img src="fig/phd101212s.gif" alt="Piled Higher and Deeper by Jorge Cham, http://www.phdcomics.com" /></a>
-  <p>"Piled Higher and Deeper" by Jorge Cham, http://www.phdcomics.com</p>
-</div>
+to keep track of what one person did, when, and why.
 
 ### Setting Up
 
