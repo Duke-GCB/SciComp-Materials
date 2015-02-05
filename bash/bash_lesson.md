@@ -6,14 +6,10 @@ This lesson instroduces intermediate bash skills to learners who have some famil
 * using wildcards and simple regex for pattern matching
 * redirecting ouput
 * using pipe to chain commands together
-* finding things: in files (grep) and across filesystem (find)
+* finding using grep and simple regex
 * writing and running a simple bash script
-
-Things not yet covered
-
-* moving data between computers: scp and rsync
-* file permissions
-* good practices for organizing files and directories
+* connecting to a different computer using ssh
+* moving data between computers: scp 
 
 # Assumptions
 We assume that learners:
@@ -25,7 +21,7 @@ We assume that learners:
 
 # Lessons
 ## Setup
-1. Download the [repository for the bash and HPC lessons](https://github.com/Duke-GCB/GCB-Academy-2015-02-05/archive/master.zip). 
+1. Download the [data files for the lessons](http://tiny.cc/gcb-data). 
 3. Move that file into a directory where you want the files for this course. 
 4. Unzip the file:
 
@@ -36,7 +32,7 @@ For some reason I need to put text here in order for Markdown to turn the next l
 
 ## Examining the contents of files
 
-Navigate into the `/GCB-Academy-2015-02-05/bash/cshl_rna_seq` directory. There are some .bed files here. When we have a directory of files, we probably want to explore then a little. Picking one of the files:
+Navigate into the `/GCB-Academy-2015-02-05/cshl_rna_seq` directory. There are some .bed files here. When we have a directory of files, we probably want to explore then a little. Picking one of the files:
 
     $ cat wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements
 
@@ -44,7 +40,7 @@ Well, that all went by pretty fast. How would we browse through the file startin
 
     $ less wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements
     
-or just look at the top?
+Use `q` to quit less. We can also just look at the top of the file:
 
     $ head wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements
     
@@ -83,13 +79,13 @@ To save this output to a file, we can **redirect** the output into a file rather
 
 	$ cut -f 1-3 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements > small.bed
 
-***Excercise*** : Create a small sample file named "sample_file.bed", including the first 200 lines and all columns except 4th column. *Hint*: This will take two separate steps and involve creating a temporary file. 
+***Excercise*** : Create a small sample file named "sample_file.bed", including the first 200 lines and all columns except 4th column. *Hint*: This will take two separate steps and involve creating a temporary file. Also, the `history` command might be useful. 
 
 We've introduced **wildcards** to operate on files that match a patters and **redirection** to save output to a file instead of the screen. The final concept in this section is combining commands using **pipes**.
 
-The power of the shell comes from the vast number of commands that do a small thing really well and the fact that we can combine these small programs into pipelines that do complex things. 
+The power of the shell comes from the vast number of commands that do a single thing really well and our ability to combine bash programs into pipelines that do complex things. 
 
-Let's check the number of chromosomes in the file. The first column contains the chromosomes:
+Let's build up a pipeline that counts the number of chromsomes that have data in this file. The first column contains the chromosomes:
 
 	$ cut -f1 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements
 
@@ -97,31 +93,27 @@ The `uniq` command will print out unique elements in the input. We could save co
 
 	$ cut -f1 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements | uniq
 
-The `uniq` command looks for runs of identical elements. Let's `sort` the list first before running `uniq`. Bash has a command for that, and we can chain together multiple commands using `|` (*pipe*). 
+The `uniq` command looks for runs of identical elements. Let's `sort` the list first before running `uniq`. Bash has a command for that, and we can chain together multiple commands using `|`. 
 
 	$ cut -f1 wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements | sort | uniq 
 
-
 ## Finding things in files and directories 
 
-Use `grep` to find information about specific chromosomes in the file. We can output the contents of the file to the screen, and then search that output for lines that match chromosome X.
+What if we only wanted the lines that matched a specific chromsome? Use `grep` to search input for particular patterns. We can output the contents of the file to the screen, and then search that output for lines that match chromosome X.
 
 	$ cat wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements | grep chrX
 
-***Exercise***: Do the same for chromosome 1. What happens?
+***Exercise***: Search for the chromsome 1 instead of chromosome X. What happens? 
+
+Why do we get chromsome 1, 10, 11, 12, etc? Use the `-w` flag to get full words!
 
 We can use more complex patterns with `grep` (and other tools) by using *regular expressions*. For example, to find both chromosome X and Y:
 
 	$ cat wgEncodeCshlShortRnaSeqA549CellContigs.bedRnaElements | grep chr[XY]
 
-If we want to be sure that we are ignoring lines that might  
-use find to locate all of the .csv files in your home directory
- 
-use find + grep to find all of the python files that use the BeautifulSoup library
-
 ## Loops
 
-Perhaps we want to extract only the information for the X chromosome from every file. We therefore want to repeat the same command multiple times with different input. 
+Perhaps we want to extract only the information for the X and Y chromosome from every file. Or we want to run a different analysis on every file. We want to repeat the same command multiple times with different input. 
 
 	$ for i in 1 2 3 B B 4
 	> do
@@ -173,13 +165,15 @@ There are various ways to access the command line arguments. We are going to sho
 The following script will take the filename from the command line:
 
 ```
+echo The name of this script is: $0
 inputfile=$1
 for c in X Y
 do 
-        echo chrosome$c
+        echo chromosome$c
         echo intputfile: $inputfile
         echo outputfile: $inputfile.chr$c
 done
 ```
 
-***Exercise***: Modify this script to print the data for the specified chromsome from the input file to the output file
+***Exercise***: Modify this script to print the data for the specified chromsome from the input file to an output file
+
