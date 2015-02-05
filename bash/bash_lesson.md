@@ -1,4 +1,4 @@
-This lesson instroduces intermediate bash skills to learners who have some familiarity with the shell. 
+This lesson introduces intermediate bash skills to learners who have some familiarity with the shell. 
 
 # Concepts covered
 
