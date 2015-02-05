@@ -107,7 +107,7 @@ hint: before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 ~~~
 
-<img src="fig/conflict.svg" alt="The conflicting changes" />
+<img src="fig/conflict.png" alt="The conflicting changes" />
 
 Git detects that the changes made in one copy overlap with those made in the other
 and stops us from trampling on our previous work.

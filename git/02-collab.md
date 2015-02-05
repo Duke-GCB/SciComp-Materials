@@ -49,7 +49,7 @@ $ git init
 Our local repository still contains our earlier work on `mars.txt`,
 but the remote repository on GitHub doesn't contain any files yet:
 
-<img src="fig/git-freshly-made-github-repo.svg" alt="Freshly-Made GitHub Repository" />
+<img src="fig/git-freshly-made-github-repo.png" alt="Freshly-Made GitHub Repository" />
 
 The next step is to connect the two repositories.
 We do this by making the GitHub repository a [remote](reference.html#remote)
@@ -151,7 +151,7 @@ Branch master set up to track remote branch master from origin.
 
 Our local and remote repositories are now in this state:
 
-<img src="fig/github-repo-after-first-push.svg" alt="GitHub Repository After First Push" />
+<img src="fig/github-repo-after-first-push.png" alt="GitHub Repository After First Push" />
 
 > ## The '-u' Flag 
 >
@@ -204,7 +204,7 @@ Replace 'vlad' with your partner's username (the one who owns the repository).
 
 `git clone` creates a fresh local copy of a remote repository.
 
-<img src="fig/github-collaboration.svg" alt="After Creating Clone of Repository" />
+<img src="fig/github-collaboration.png" alt="After Creating Clone of Repository" />
 
 The new collaborator can now make a change in their copy of the repository:
 
