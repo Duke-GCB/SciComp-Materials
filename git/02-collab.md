@@ -3,7 +3,7 @@ layout: page
 title: Version Control with Git
 subtitle: Collaborating
 ---
-> ## Learning Objectives {.objectives}
+> ## Learning Objectives 
 >
 > *   Explain what remote repositories are and why they are useful.
 > *   Explain what happens when a remote repository is cloned.
@@ -40,7 +40,7 @@ GitHub displays a page with a URL and some information on how to configure your 
 
 This effectively does the following on GitHub's servers:
 
-~~~ {.bash}
+~~~ 
 $ mkdir planets
 $ cd planets
 $ git init
@@ -61,7 +61,7 @@ the string we need to identify it:
 
 Click on the 'HTTPS' link to change the [protocol](reference.html#protocol) from SSH to HTTPS.
 
-> ## HTTPS vs SSH {.callout}
+> ## HTTPS vs SSH 
 >
 > We use HTTPS here because it does not require additional configuration.
 > After the workshop you may want to set up SSH access, which is a bit more
@@ -77,7 +77,7 @@ Copy that URL from the browser,
 go into the local `planets` repository,
 and run this command:
 
-~~~ {.bash}
+~~~ 
 $ git remote add origin https://github.com/vlad/planets
 ~~~
 
@@ -86,10 +86,10 @@ the only difference should be your username instead of `vlad`.
 
 We can check that the command has worked by running `git remote -v`:
 
-~~~ {.bash}
+~~~ 
 $ git remote -v
 ~~~
-~~~ {.output}
+~~~ 
 origin   https://github.com/vlad/planets.git (push)
 origin   https://github.com/vlad/planets.git (fetch)
 ~~~
@@ -102,10 +102,10 @@ Once the nickname `origin` is set up,
 this command will push the changes from our local repository
 to the repository on GitHub:
 
-~~~ {.bash}
+~~~ 
 $ git push origin master
 ~~~
-~~~ {.output}
+~~~ 
 Counting objects: 9, done.
 Delta compression using up to 4 threads.
 Compressing objects: 100% (6/6), done.
@@ -116,13 +116,13 @@ To https://github.com/vlad/planets
 Branch master set up to track remote branch master from origin.
 ~~~
 
-> ## Proxy {.callout}
+> ## Proxy 
 >
 > If the network you are connected to uses a proxy there is an chance that your last
 > command failed with "Could not resolve hostname" as the error message. To
 > solve this issue you need to tell Git about the proxy:
 >
-> ~~~ {.bash}
+> ~~~ 
 > $ git config --global http.proxy http://user:password@proxy.url
 > $ git config --global https.proxy http://user:password@proxy.url
 > ~~~
@@ -130,19 +130,19 @@ Branch master set up to track remote branch master from origin.
 > When you connect to another network that doesn't use a proxy you will need to
 > tell Git to disable the proxy using
 >
-> ~~~ {.bash}
+> ~~~ 
 > $ git config --global --unset http.proxy
 > $ git config --global --unset https.proxy
 > ~~~
 
-> ## Password Managers {.callout}
+> ## Password Managers 
 >
 > If your operating system has a password manager configured, `git push` will
 > try to use it when it needs your username and password. If you want to type
 > your username and password at the terminal instead of using
 > a password manager, type
 >
-> ~~~ {.bash}
+> ~~~ 
 > $ unset SSH_ASKPASS
 > ~~~
 >
@@ -153,7 +153,7 @@ Our local and remote repositories are now in this state:
 
 <img src="fig/github-repo-after-first-push.svg" alt="GitHub Repository After First Push" />
 
-> ## The '-u' Flag {.callout}
+> ## The '-u' Flag 
 >
 > You may see a `-u` option used with `git push` in some documentation.
 > It is related to concepts we cover in our intermediate lesson,
@@ -161,10 +161,10 @@ Our local and remote repositories are now in this state:
 
 We can pull changes from the remote repository to the local one as well:
 
-~~~ {.bash}
+~~~ 
 $ git pull origin master
 ~~~
-~~~ {.output}
+~~~ 
 From https://github.com/vlad/planets
  * branch            master     -> FETCH_HEAD
 Already up-to-date.
@@ -179,7 +179,7 @@ this command would download them to our local repository.
 For the next step, get into pairs.
 Pick one of your repositories on Github to use for collaboration.
 
-> ## Practicing by yourself {.callout}
+> ## Practicing by yourself 
 >
 > If you're working through this lesson on your own, you can carry on by opening
 > a second terminal window, and switching to another directory (e.g. `/tmp`).
@@ -196,7 +196,7 @@ The other partner should `cd` to another directory
 (so `ls` doesn't show a `planets` folder),
 and then make a copy of this repository on your own computer:
 
-~~~ {.bash}
+~~~ 
 $ git clone https://github.com/vlad/planets.git
 ~~~
 
@@ -208,29 +208,29 @@ Replace 'vlad' with your partner's username (the one who owns the repository).
 
 The new collaborator can now make a change in their copy of the repository:
 
-~~~ {.bash}
+~~~ 
 $ cd planets
 $ nano pluto.txt
 $ cat pluto.txt
 ~~~
-~~~ {.output}
+~~~ 
 It is so a planet!
 ~~~
-~~~ {.bash}
+~~~ 
 $ git add pluto.txt
 $ git commit -m "Some notes about Pluto"
 ~~~
-~~~ {.output}
+~~~ 
  1 file changed, 1 insertion(+)
  create mode 100644 pluto.txt
 ~~~
 
 then push the change to GitHub:
 
-~~~ {.bash}
+~~~ 
 $ git push origin master
 ~~~
-~~~ {.output}
+~~~ 
 Counting objects: 4, done.
 Delta compression using up to 4 threads.
 Compressing objects: 100% (2/2), done.
@@ -249,10 +249,10 @@ when we were setting up remotes by hand.)
 
 We can now download changes into the original repository on our machine:
 
-~~~ {.bash}
+~~~ 
 $ git pull origin master
 ~~~
-~~~ {.output}
+~~~ 
 remote: Counting objects: 4, done.
 remote: Compressing objects: 100% (2/2), done.
 remote: Total 3 (delta 0), reused 3 (delta 0)
@@ -266,7 +266,7 @@ Fast-forward
  create mode 100644 pluto.txt
 ~~~
 
-> ## GitHub Timestamp {.challenge}
+> ## GitHub Timestamp 
 >
 > Create a repository on GitHub,
 > clone it,

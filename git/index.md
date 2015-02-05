@@ -39,7 +39,7 @@ small data sets,
 and anything that changes over time or needs to be shared
 can and should be stored in a version control system.
 
-> ## Prerequisites {.prereq}
+> ## Prerequisites 
 >
 > In this lesson we use Git from the Unix Shell.
 > Some previous experience with the shell is expected,
