@@ -5,50 +5,26 @@ def parse_record(record_string):
     '''
     Return formatted data record as (Y, M, D, site, value) or None
     '''
-    
-    month_conversions = {
-        "Jan": 1,
-        "Feb": 2,
-        "Mar": 3,
-        "Apr": 4,
-        "May": 5,
-        "Jun": 6,
-        "Jul": 7,
-        "Aug": 8,
-        "Sep": 9,
-        "Oct": 10,
-        "Nov": 11,
-        "Dec": 12
-    }
 
-    # each pattern is a tuple, with the regex as the first value, 
-    # then the matches in the order we would like:
-    # year, month, day, site, value
-    patterns = [
-        ( 
-            '(.*)\t(20\d\d)-(\d\d)-(\d\d)\t(\d+\.?\d*)',
-            2, 3, 4, 1, 5
-        ),
-        (
-            '^([\w|\s]+)/(\w+)\s*(\d+),?\s*(20\d\d)/(\d+\.?\d*)$',
-            4, 2, 3, 1, 5
-        )
-    ]
+    # Save patterns in a dictionary. For each pattern:
+    #   - key is the regex string
+    #   - value is the field order in a list. 
+    # The value list field order is:
+    #   - year, month, day, site, value
+    patterns = {
+        '^(\w+)\s+(20\d\d)-(\d\d)-(\d\d)\s+(\d+\.?\d*)$': [2, 3, 4, 1, 5],
+        '^(\w+)/(\w+)\s*(\d+),?\s*(20\d\d)/(\d+\.?\d*)$': [4, 2, 3, 1, 5]
+    }
     
-    for pattern, y, m, d, s, v in patterns:
+    for pattern, order_list in patterns.items():
         match = re.search(pattern, record_string)
         if match:
-            if match.group(m)[0:3] in month_conversions.keys():
-                month = month_conversions[match.group(m)[0:3]]
-            else:
-                month = match.group(m)
-            
             return [
-                match.group(y), 
-                month, 
-                match.group(d), 
-                match.group(s), 
-                match.group(v)
+                match.group(order_list[0]),  # year
+                match.group(order_list[1]),  # month
+                match.group(order_list[2]),  # day
+                match.group(order_list[3]),  # site
+                match.group(order_list[4])   # value
             ]
     
     return None
@@ -56,5 +32,10 @@ def parse_record(record_string):
 for line in fileinput.input():
     if fileinput.isfirstline():
         continue
+
     fields = parse_record(line)
-    print fields
+
+    if fields:
+        print ",".join(fields)
+    else:
+        print "Line {} did not match!".format(fileinput.lineno())

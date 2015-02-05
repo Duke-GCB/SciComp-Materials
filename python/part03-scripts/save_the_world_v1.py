@@ -2,7 +2,7 @@ import fileinput
 import re
 
 for line in fileinput.input():
-    match = re.search('^(.*)\t(20\d\d)-(\d\d)-(\d\d)\t(\d+\.?\d*)$', line)
+    match = re.search('^(\w+)\s+(20\d\d)-(\d\d)-(\d\d)\s+(\d+\.?\d*)$', line)
     
     if match:
         fields = [
@@ -13,6 +13,6 @@ for line in fileinput.input():
             match.group(5)   # value
         ]
         
-        print ','.join(fields)
+        print fields
     else:
         print "Line {} did not match!".format(fileinput.lineno())
