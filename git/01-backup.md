@@ -3,7 +3,7 @@ layout: page
 title: Version Control with Git
 subtitle: A Better Kind of Backup
 ---
-> ## Learning Objectives {.objectives}
+> ## Learning Objectives
 > 
 > *   Explain which initialization and configuration steps are required once per machine,
 >     and which are required once per repository.
@@ -16,14 +16,7 @@ subtitle: A Better Kind of Backup
 >     and explain why it is sometimes useful to do so.
 
 We'll start by exploring how version control can be used
-to keep track of what one person did and when.
-Even if you aren't collaborating with other people,
-version control is much better for this than this:
-
-<div>
-  <a href="http://www.phdcomics.com"><img src="fig/phd101212s.gif" alt="Piled Higher and Deeper by Jorge Cham, http://www.phdcomics.com" /></a>
-  <p>"Piled Higher and Deeper" by Jorge Cham, http://www.phdcomics.com</p>
-</div>
+to keep track of what one person did, when, and why.
 
 ### Setting Up
 
@@ -31,7 +24,7 @@ The first time we use Git on a new machine,
 we need to configure a few things.
 Here's how Dracula sets up his new laptop:
 
-~~~ {.bash}
+~~~
 $ git config --global user.name "Vlad Dracula"
 $ git config --global user.email "vlad@tran.sylvan.ia"
 $ git config --global color.ui "auto"
@@ -55,19 +48,19 @@ we're telling Git:
 The four commands above only need to be run once:
 the flag `--global` tells Git to use the settings for every project on this machine.
 
-> ## Proxy {.callout}
+> ## Proxy
 >
 > In some networks you need to use a proxy. If this is the case you may also
 > need to tell Git about the proxy:
 >
-> ~~~ {.bash}
+> ~~~
 > $ git config --global http.proxy proxy-url
 > $ git config --global https.proxy proxy-url
 > ~~~
 >
 > To disable the proxy, use
 >
-> ~~~ {.bash}
+> ~~~
 > $ git config --global --unset http.proxy
 > $ git config --global --unset https.proxy
 > ~~~
@@ -78,7 +71,7 @@ Once Git is configured,
 we can start using it.
 Let's create a directory for our work:
 
-~~~ {.bash}
+~~~
 $ mkdir planets
 $ cd planets
 ~~~
@@ -86,24 +79,24 @@ $ cd planets
 and tell Git to make it a [repository](reference.html#repository)&mdash;a place where
 Git can store old versions of our files:
 
-~~~ {.bash}
+~~~
 $ git init
 ~~~
 
 If we use `ls` to show the directory's contents,
 it appears that nothing has changed:
 
-~~~ {.bash}
+~~~
 $ ls
 ~~~
 
 But if we add the `-a` flag to show everything,
 we can see that Git has created a hidden directory called `.git`:
 
-~~~ {.bash}
+~~~
 $ ls -a
 ~~~
-~~~ {.output}
+~~~
 .	..	.git
 ~~~
 
@@ -114,10 +107,10 @@ we will lose the project's history.
 We can check that everything is set up correctly
 by asking Git to tell us the status of our project:
 
-~~~ {.bash}
+~~~
 $ git status
 ~~~
-~~~ {.output}
+~~~
 # On branch master
 #
 # Initial commit
@@ -133,38 +126,38 @@ about the Red Planet's suitability as a base.
 you can use whatever editor you like.
 In particular, this does not have to be the core.editor you set globally earlier.)
 
-~~~ {.bash}
+~~~
 $ nano mars.txt
 ~~~
 
 Type the text below into the `mars.txt` file:
 
-~~~ {.bash}
+~~~
 Cold and dry, but everything is my favorite color
 ~~~
 
 `mars.txt` now contains a single line:
 
-~~~ {.bash}
+~~~
 $ ls
 ~~~
-~~~ {.output}
+~~~
 mars.txt
 ~~~
-~~~ {.bash}
+~~~
 $ cat mars.txt
 ~~~
-~~~ {.output}
+~~~
 Cold and dry, but everything is my favorite color
 ~~~
 
 If we check the status of our project again,
 Git tells us that it's noticed the new file:
 
-~~~ {.bash}
+~~~
 $ git status
 ~~~
-~~~ {.output}
+~~~
 # On branch master
 #
 # Initial commit
@@ -180,16 +173,16 @@ The "untracked files" message means that there's a file in the directory
 that Git isn't keeping track of.
 We can tell Git that it should do so using `git add`:
 
-~~~ {.bash}
+~~~
 $ git add mars.txt
 ~~~
 
 and then check that the right thing happened:
 
-~~~ {.bash}
+~~~ 
 $ git status
 ~~~
-~~~ {.output}
+~~~ 
 # On branch master
 #
 # Initial commit
@@ -206,10 +199,10 @@ but it hasn't yet recorded any changes for posterity as a commit.
 To get it to do that,
 we need to run one more command:
 
-~~~ {.bash}
+~~~ 
 $ git commit -m "Starting to think about Mars"
 ~~~
-~~~ {.output}
+~~~ 
 [master (root-commit) f22b25e] Starting to think about Mars
  1 file changed, 1 insertion(+)
  create mode 100644 mars.txt
@@ -219,8 +212,11 @@ When we run `git commit`,
 Git takes everything we have told it to save by using `git add`
 and stores a copy permanently inside the special `.git` directory.
 This permanent copy is called a [revision](reference.html#revision)
-and its short identifier is `f22b25e`.
-(Your revision may have another identifier.)
+and its short identifier is `f22b25e`, which is the short form of
+`f22b25eef5155f4faa123b29a0885c2c66dbda48`. (Your revision will have
+another identifier. The identifiers used by Git are
+[SHA1](http://en.wikipedia.org/wiki/SHA-1) checksums, which due to the
+way they are generated will be globally unique.)
 
 We use the `-m` flag (for "message")
 to record a comment that will help us remember later on what we did and why.
@@ -230,10 +226,10 @@ so that we can write a longer message.
 
 If we run `git status` now:
 
-~~~ {.bash}
+~~~ 
 $ git status
 ~~~
-~~~ {.output}
+~~~ 
 # On branch master
 nothing to commit, working directory clean
 ~~~
@@ -242,10 +238,10 @@ it tells us everything is up to date.
 If we want to know what we've done recently,
 we can ask Git to show us the project's history using `git log`:
 
-~~~ {.bash}
+~~~ 
 $ git log
 ~~~
-~~~ {.output}
+~~~ 
 commit f22b25e3233b4645dabd0d81e651fe074bd8e73b
 Author: Vlad Dracula <vlad@tran.sylvan.ia>
 Date:   Thu Aug 22 09:51:46 2013 -0400
@@ -262,7 +258,7 @@ the revision's author,
 when it was created,
 and the log message Git was given when the revision was created.
 
-> ## Where Are My Changes? {.callout}
+> ## Where Are My Changes? 
 >
 > If we run `ls` at this point, we will still see just one file called `mars.txt`.
 > That's because Git saves information about files' history
@@ -276,11 +272,11 @@ Now suppose Dracula adds more information to the file.
 (Again, we'll edit with `nano` and then `cat` the file to show its contents;
 you may use a different editor, and don't need to `cat`.)
 
-~~~ {.bash}
+~~~ 
 $ nano mars.txt
 $ cat mars.txt
 ~~~
-~~~ {.output}
+~~~ 
 Cold and dry, but everything is my favorite color
 The two moons may be a problem for Wolfman
 ~~~
@@ -288,10 +284,10 @@ The two moons may be a problem for Wolfman
 When we run `git status` now,
 it tells us that a file it already knows about has been modified:
 
-~~~ {.bash}
+~~~ 
 $ git status
 ~~~
-~~~ {.output}
+~~~ 
 # On branch master
 # Changes not staged for commit:
 #   (use "git add <file>..." to update what will be committed)
@@ -313,10 +309,10 @@ which shows us the differences between
 the current state of the file
 and the most recently saved version:
 
-~~~ {.bash}
+~~~ 
 $ git diff
 ~~~
-~~~ {.output}
+~~~ 
 diff --git a/mars.txt b/mars.txt
 index df0654a..315bf3a 100644
 --- a/mars.txt
@@ -343,10 +339,10 @@ If we can break it down into pieces:
 
 Let's commit our change:
 
-~~~ {.bash}
+~~~ 
 $ git commit -m "Concerns about Mars's moons on my furry friend"
 ~~~
-~~~ {.output}
+~~~ 
 # On branch master
 # Changes not staged for commit:
 #   (use "git add <file>..." to update what will be committed)
@@ -361,11 +357,11 @@ Whoops:
 Git won't commit because we didn't use `git add` first.
 Let's fix that:
 
-~~~ {.bash}
+~~~ 
 $ git add mars.txt
 $ git commit -m "Concerns about Mars's moons on my furry friend"
 ~~~
-~~~ {.output}
+~~~ 
 [master 34961b1] Concerns about Mars's moons on my furry friend
  1 file changed, 1 insertion(+)
 ~~~
@@ -389,7 +385,7 @@ but not yet committed.
 `git add` puts things in this area,
 and `git commit` then copies them to long-term storage (as a commit):
 
-<img src="fig/git-staging-area.svg" alt="The Git Staging Area" />
+<img src="fig/git-staging-area.png" alt="The Git Staging Area" />
 
 Let's watch as our changes to a file move from our editor
 to the staging area
@@ -397,19 +393,19 @@ and into long-term storage.
 First,
 we'll add another line to the file:
 
-~~~ {.bash}
+~~~ 
 $ nano mars.txt
 $ cat mars.txt
 ~~~
-~~~ {.output}
+~~~ 
 Cold and dry, but everything is my favorite color
 The two moons may be a problem for Wolfman
 But the Mummy will appreciate the lack of humidity
 ~~~
-~~~ {.bash}
+~~~ 
 $ git diff
 ~~~
-~~~ {.output}
+~~~ 
 diff --git a/mars.txt b/mars.txt
 index 315bf3a..b36abfd 100644
 --- a/mars.txt
@@ -426,7 +422,7 @@ we've added one line to the end of the file
 Now let's put that change in the staging area
 and see what `git diff` reports:
 
-~~~ {.bash}
+~~~ 
 $ git add mars.txt
 $ git diff
 ~~~
@@ -438,10 +434,10 @@ and what's currently in the directory.
 However,
 if we do this:
 
-~~~ {.bash}
+~~~ 
 $ git diff --staged
 ~~~
-~~~ {.output}
+~~~ 
 diff --git a/mars.txt b/mars.txt
 index 315bf3a..b36abfd 100644
 --- a/mars.txt
@@ -457,30 +453,30 @@ the last committed change
 and what's in the staging area.
 Let's save our changes:
 
-~~~ {.bash}
+~~~ 
 $ git commit -m "Thoughts about the climate"
 ~~~
-~~~ {.output}
+~~~ 
 [master 005937f] Thoughts about the climate
  1 file changed, 1 insertion(+)
 ~~~
 
 check our status:
 
-~~~ {.bash}
+~~~ 
 $ git status
 ~~~
-~~~ {.output}
+~~~ 
 # On branch master
 nothing to commit, working directory clean
 ~~~
 
 and look at the history of what we've done so far:
 
-~~~ {.bash}
+~~~ 
 $ git log
 ~~~
-~~~ {.output}
+~~~ 
 commit 005937fbe2a98fb83f0ade869025dc2636b4dad5
 Author: Vlad Dracula <vlad@tran.sylvan.ia>
 Date:   Thu Aug 22 10:14:07 2013 -0400
@@ -505,7 +501,7 @@ we first need to add the changed files to the staging area
 (`git add`) and then commit the staged changes to the
 repository (`git commit`):
 
-<img src="fig/git-committing.svg" alt="The Git Commit Workflow" />
+<img src="fig/git-committing.png" alt="The Git Commit Workflow" />
 
 ### Exploring History
 
@@ -514,10 +510,10 @@ we use `git diff` again,
 but refer to old versions
 using the notation `HEAD~1`, `HEAD~2`, and so on:
 
-~~~ {.bash}
+~~~ 
 $ git diff HEAD~1 mars.txt
 ~~~
-~~~ {.output}
+~~~ 
 diff --git a/mars.txt b/mars.txt
 index 315bf3a..b36abfd 100644
 --- a/mars.txt
@@ -527,10 +523,10 @@ index 315bf3a..b36abfd 100644
  The two moons may be a problem for Wolfman
 +But the Mummy will appreciate the lack of humidity
 ~~~
-~~~ {.bash}
+~~~ 
 $ git diff HEAD~2 mars.txt
 ~~~
-~~~ {.output}
+~~~ 
 diff --git a/mars.txt b/mars.txt
 index df0654a..b36abfd 100644
 --- a/mars.txt
@@ -560,10 +556,10 @@ Our first commit was given the ID
 f22b25e3233b4645dabd0d81e651fe074bd8e73b,
 so let's try this:
 
-~~~ {.bash}
+~~~ 
 $ git diff f22b25e3233b4645dabd0d81e651fe074bd8e73b mars.txt
 ~~~
-~~~ {.output}
+~~~ 
 diff --git a/mars.txt b/mars.txt
 index df0654a..b36abfd 100644
 --- a/mars.txt
@@ -578,10 +574,10 @@ That's the right answer,
 but typing random 40-character strings is annoying,
 so Git lets us use just the first few:
 
-~~~ {.bash}
+~~~ 
 $ git diff f22b25e mars.txt
 ~~~
-~~~ {.output}
+~~~ 
 diff --git a/mars.txt b/mars.txt
 index df0654a..b36abfd 100644
 --- a/mars.txt
@@ -599,21 +595,21 @@ we can save changes to files and see what we've changed---how
 can we restore older versions of things?
 Let's suppose we accidentally overwrite our file:
 
-~~~ {.bash}
+~~~ 
 $ nano mars.txt
 $ cat mars.txt
 ~~~
-~~~ {.output}
+~~~ 
 We will need to manufacture our own oxygen
 ~~~
 
 `git status` now tells us that the file has been changed,
 but those changes haven't been staged:
 
-~~~ {.bash}
+~~~ 
 $ git status
 ~~~
-~~~ {.output}
+~~~ 
 # On branch master
 # Changes not staged for commit:
 #   (use "git add <file>..." to update what will be committed)
@@ -627,11 +623,11 @@ no changes added to commit (use "git add" and/or "git commit -a")
 We can put things back the way they were
 by using `git checkout`:
 
-~~~ {.bash}
+~~~ 
 $ git checkout HEAD mars.txt
 $ cat mars.txt
 ~~~
-~~~ {.output}
+~~~ 
 Cold and dry, but everything is my favorite color
 The two moons may be a problem for Wolfman
 But the Mummy will appreciate the lack of humidity
@@ -645,7 +641,7 @@ which is the last saved revision.
 If we want to go back even further,
 we can use a revision identifier instead:
 
-~~~ {.bash}
+~~~ 
 $ git checkout f22b25e mars.txt
 ~~~
 
@@ -657,19 +653,19 @@ the commit in which we made the change we're trying to get rid of.
 In the example below, we want retrieve the state from before the most
 recent commit (`HEAD~1`), which is revision `f22b25e`:
 
-<img src="fig/git-checkout.svg" alt="Git Checkout" />
+<img src="fig/git-checkout.png" alt="Git Checkout" />
 
 The following diagram illustrates what the history of a file might look
 like (moving back from `HEAD`, the most recently committed version):
 
-<img src="fig/git-when-revisions-updated.svg" alt="When Git Updates Revision Numbers" />
+<img src="fig/git-when-revisions-updated.png" alt="When Git Updates Revision Numbers" />
 
-> ## Simplifying the Common Case {.callout}
+> ## Simplifying the Common Case 
 >
 > If you read the output of `git status` carefully,
 > you'll see that it includes this hint:
 >
-> ~~~ {.bash}
+> ~~~ 
 > (use "git checkout -- <file>..." to discard changes in working directory)
 > ~~~
 >
@@ -696,17 +692,17 @@ like backup files created by our editor
 or intermediate files created during data analysis.
 Let's create a few dummy files:
 
-~~~ {.bash}
+~~~ 
 $ mkdir results
 $ touch a.dat b.dat c.dat results/a.out results/b.out
 ~~~
 
 and see what Git says:
 
-~~~ {.bash}
+~~~ 
 $ git status
 ~~~
-~~~ {.output}
+~~~ 
 # On branch master
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
@@ -725,11 +721,11 @@ so let's tell Git to ignore them.
 
 We do this by creating a file in the root directory of our project called `.gitignore`.
 
-~~~ {.bash}
+~~~ 
 $ nano .gitignore
 $ cat .gitignore
 ~~~
-~~~ {.output}
+~~~ 
 *.dat
 results/
 ~~~
@@ -742,10 +738,10 @@ Git would continue to track them.)
 Once we have created this file,
 the output of `git status` is much cleaner:
 
-~~~ {.bash}
+~~~ 
 $ git status
 ~~~
-~~~ {.output}
+~~~ 
 # On branch master
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
@@ -760,12 +756,12 @@ but everyone we're sharing our repository with will probably want to ignore
 the same things that we're ignoring.
 Let's add and commit `.gitignore`:
 
-~~~ {.bash}
+~~~ 
 $ git add .gitignore
 $ git commit -m "Add the ignore file"
 $ git status
 ~~~
-~~~ {.output}
+~~~ 
 # On branch master
 nothing to commit, working directory clean
 ~~~
@@ -773,10 +769,10 @@ nothing to commit, working directory clean
 As a bonus,
 using `.gitignore` helps us avoid accidentally adding files to the repository that we don't want.
 
-~~~ {.bash}
+~~~ 
 $ git add a.dat
 ~~~
-~~~ {.output}
+~~~ 
 The following paths are ignored by one of your .gitignore files:
 a.dat
 Use -f if you really want to add them.
@@ -787,10 +783,10 @@ If we really want to override our ignore settings,
 we can use `git add -f` to force Git to add something.
 We can also always see the status of ignored files if we want:
 
-~~~ {.bash}
+~~~ 
 $ git status --ignored
 ~~~
-~~~ {.output}
+~~~ 
 # On branch master
 # Ignored files:
 #  (use "git add -f <file>..." to include in what will be committed)
@@ -803,7 +799,7 @@ $ git status --ignored
 nothing to commit, working directory clean
 ~~~
 
-> ## `bio` Repository {.challenge}
+> ## `bio` Repository 
 >
 > Create a new Git repository on your computer called `bio`.
 > Write a three-line biography for yourself in a file called `me.txt`,
@@ -811,11 +807,11 @@ nothing to commit, working directory clean
 > then modify one line and add a fourth and display the differences
 > between its updated state and its original state.
 
-> ## Places to Create Git Repositories {.challenge}
+> ## Places to Create Git Repositories 
 >
 > The following sequence of commands creates one Git repository inside another:
 > 
-> ~~~ {.bash}
+> ~~~ 
 > cd           # return to home directory
 > mkdir alpha  # make a new directory alpha
 > cd alpha     # go into alpha
