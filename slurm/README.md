@@ -16,17 +16,16 @@ This lesson introduces the concepts of data staging and job execution on cluster
 ## Copy files over ssh
 
 * Log into the DSCR (dscr-slogin-02.oit.duke.edu)
-* mkdir gcbscicomp
-* cd gcbscicomp
 * Log into the vm in another terminal window
 * Cd to the directory where the bed files are located
 * Perform a recursive scp initiated from the dscr
 * Remove the files and directory
 * Perform a recursive scp initiated from the vm
-* Remove the .txt file
+* Remove the .txt files
 * Show an rsync example
 * rsync -a cshl_rna_seq dtb17@dscr-slogin-02.oit.duke.edu:
 * show verbose and dry-run as well
+* use curl and wget to download a file from
 
 ## Overview
 Introduction to using SLURM (Simple Linux Utility for Resource Management)
@@ -210,3 +209,9 @@ srun /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i ~
 
 ##### Multi-threaded applications
 * Use the --cpus-per-task option in coordination with the option in the application that requests the number of threads to use
+
+##### How to get help
+* make sure to always give your netid, jobid and any error messages
+* for DSCR help contact hpc-admins@duke.edu
+* for HARDAC support contact gcb-help@duke.edu
+* Classes at rc.duke.edu
