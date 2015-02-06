@@ -130,6 +130,7 @@ sinfo
 /opt/apps/bedtools2-2.19.1/bin/bedtools
 ```
 * Using find on /opt
+* Explain how to redirect stderr
 ##### Running an interactive job
 * Run bedtools merge
 * Show the following page
