@@ -1,4 +1,17 @@
-# Job and data staging for HPC
+This lesson introduces the concepts of data staging and job execution on cluster using SLURM.
+# Concepts covered
+
+* Copying data between remote servers
+* Using ssh to connect to remote computers
+* Command line tools for downloading files
+* Explaining the difference between head and compute nodes
+* Viewing the job queue and narrowing the focus to only jobs the user has submitted
+* Creating and submitting jobs to the cluster
+* Viewing the status of running jobs
+* Cancelling jobs
+* Job arrays
+
+# Lessons
 
 ## Overview
 Introduction to using SLURM (Simple Linux Utility for Resource Management)
@@ -77,7 +90,9 @@ sinfo
 
 ##### Node states
 * alloc - node is 
-```ALLOCATED
+
+```bash
+   ALLOCATED
     The node has been allocated to one or more jobs. 
    COMPLETING
     All jobs associated with this node are in the process of COMPLETING. This node state will be removed when all of the job's processes have terminated and the SLURM epilog program (if any) has terminated. See the Epilog parameter description in the slurm.conf man page for more information. 
@@ -98,6 +113,7 @@ sinfo
    UNKNOWN
     The SLURM controller has just started and the node's state has not yet been determined. 
 ```
+
 ```bash
 
 /opt/apps/bedtools2-2.19.1/bin/bedtools
