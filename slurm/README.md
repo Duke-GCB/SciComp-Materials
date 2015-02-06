@@ -208,3 +208,5 @@ srun /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i ~
 * bitmask
 * setgid
 
+##### Multi-threaded applications
+* Use the --cpus-per-task option in coordination with the option in the application that requests the number of threads to use
