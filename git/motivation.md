@@ -46,7 +46,6 @@ superior backup as well as many other benefits, including
 comprehensive who, when, what, why metadata on the increments from one
 backup to another.**
 
-
 ## Why Git?
 
 A less important reason is that Git is a distributed version control
