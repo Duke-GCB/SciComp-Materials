@@ -13,6 +13,21 @@ This lesson introduces the concepts of data staging and job execution on cluster
 
 # Lessons
 
+## Copy files over ssh
+
+* Log into the DSCR (dscr-slogin-02.oit.duke.edu)
+* mkdir gcbscicomp
+* cd gcbscicomp
+* Log into the vm in another terminal window
+* Cd to the directory where the bed files are located
+* Perform a recursive scp initiated from the dscr
+* Remove the files and directory
+* Perform a recursive scp initiated from the vm
+* Remove the .txt file
+* Show an rsync example
+** rsync -a cshl_rna_seq dtb17@dscr-slogin-02.oit.duke.edu:
+** show verbose and dry-run as well
+
 ## Overview
 Introduction to using SLURM (Simple Linux Utility for Resource Management)
 
@@ -83,13 +98,13 @@ netid@dscr-slogin-01 ~ $ srun --mem=256 --pty bash -i
 * Denote ownership
 * It's all up to the HPC admins
 * How to show partition information
+* Explain premtion for low priority jobs
 
 ```bash
 sinfo
 ```
 
 ##### Node states
-* alloc - node is 
 
 ```bash
    ALLOCATED
@@ -114,7 +129,18 @@ sinfo
     The SLURM controller has just started and the node's state has not yet been determined. 
 ```
 
+##### Locating software on the cluster
+
+* Explain the different between /usr/bin and executables in /usr/local/bin and /opt
+
 ```bash
 
 /opt/apps/bedtools2-2.19.1/bin/bedtools
 ```
+
+* Run bedtools merge
+* Show the following page ** http://quinlanlab.org/tutorials/cshl2014/bedtools.html
+** Run examples from the merge section
+*** sort -k1,1 -k2,2n ~/cshl_rna_seq/wgEncodeCshlShortRnaSeqA549CellCiptapContigs.bedRnaElements > ~/cshl_rna_seq/CellCiptapContigs.sort.bed
+*** /opt/apps/bedtools2-2.19.1/bin/bedtools merge -i ~/cshl_rna_seq/CellCiptapContigs.sort.bed 
+
