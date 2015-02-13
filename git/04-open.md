@@ -130,7 +130,7 @@ the most popular, including the following:
 * [GNU General Public License](http://opensource.org/licenses/GPL-3.0)
   (GPL),
 * [MIT license](http://opensource.org/licenses/MIT),
-* [BSD license](http://opensource.org/licenses/BSD-2-Clause
+* [BSD license](http://opensource.org/licenses/BSD-2-Clause)
 
 The GPL is different from most other open source licenses in that it
 is
