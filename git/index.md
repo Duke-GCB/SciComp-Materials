@@ -12,7 +12,7 @@ each one will spend a lot of time waiting for the other to finish,
 but if they work on their own copies and email changes back and forth
 things will be lost, overwritten, or duplicated.
 
-A colleague suggests using [version control](reference.html#version-control) to manage their work.
+A colleague suggests using [version control](reference.md#version-control) to manage their work.
 Version control is better than mailing files back and forth because:
 
 *   Nothing that is committed to version control is ever lost.
@@ -47,14 +47,12 @@ can and should be stored in a version control system.
 
 ## Topics
 
-1.  [A Better Kind of Backup](01-backup.html)
-2.  [Collaborating](02-collab.html)
-3.  [Conflicts](03-conflict.html)
-4.  [Open Science](04-open.html)
+1.  [A Better Kind of Backup](01-backup.md)
+2.  [Collaborating](02-collab.md)
+3.  [Conflicts](03-conflict.md)
+4.  [Open Science](04-open.md)
 
 ## Other Resources
 
-*   [Motivation](motivation.html)
-*   [Reference](reference.html)
-*   [Discussion](discussion.html)
-*   [Instructor's Guide](instructors.html)
+*   [Motivation](motivation.md)
+*   [Reference](reference.md)
