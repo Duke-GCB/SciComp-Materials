@@ -3,7 +3,7 @@ layout: page
 title: Version Control with Git
 subtitle: Reference
 ---
-## [A Better Kind of Backup](01-backup.html)
+## [A Better Kind of Backup](01-backup.md)
 
 *   Use `git config` to configure
     a user name, email address, editor, and other preferences once per machine.
@@ -19,7 +19,7 @@ subtitle: Reference
 *   `git checkout` recovers old versions of files.
 *   The `.gitignore` file tells Git what files to ignore.
 
-## [Collaborating](02-collab.html)
+## [Collaborating](02-collab.md)
 
 *   A local Git repository can be connected to one or more remote repositories.
 *   Use the HTTPS protocol to connect to remote repositories until you have learned how to set up SSH.
@@ -28,13 +28,13 @@ subtitle: Reference
 *   `git clone` copies a remote repository to create a local repository
     with a remote called `origin` automatically set up.
 
-## [Conflicts](03-conflict.html)
+## [Conflicts](03-conflict.md)
 
 *   Conflicts occur when two or more people change the same file(s) at the same time.
 *   The version control system does not allow people to blindly overwrite each other's changes.
     Instead, it highlights conflicts so that they can be resolved.
 
-## [Open Science](04-open.html)
+## [Open Science](04-open.md)
 
 *   Open scientific work is more useful and more highly cited than closed.
 *   People who incorporate GPL'd software into theirs must make theirs open;
