@@ -7,7 +7,7 @@ course that was held Feb 5-6, 2015, as part of the [GCB Academy].
 Credits
 -------
 
-With the exception of the SLURM lesson, the material is directly reused from
+With the exception of the SLURM and Python lessons, the material is directly reused from
 [Software Carpentry], in part with modifications. Most of the modifications
 consist of adapting the material to genomic (BED format) sample data, and of
 simplifying or trimming down the material. Some material was also added as
