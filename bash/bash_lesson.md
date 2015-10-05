@@ -22,13 +22,9 @@ We assume that learners:
 # Lessons
 ## Setup
 1. Download the [data files for the lessons](http://tiny.cc/gcb-data).
-2. Create a directory for the course.
+2. Create a directory for the course: `mkdir GCB-Academy-2015`
 3. Move that file into a directory where you want the files for this course.
-4. Unzip the file:
-
-For some reason I need to put text here in order for Markdown to turn the next line into code
-
-     $ unzip GCB-Academy-2015-02-05-master.zip
+4. Unzip the file: `unzip GCB-Academy-2015-02-05-master.zip`
 
 
 ## Examining the contents of files
@@ -86,7 +82,7 @@ We've introduced **wildcards** to operate on files that match a patters and **re
 
 The power of the shell comes from the vast number of commands that do a single thing really well and our ability to combine bash programs into pipelines that do complex things.
 
-Let's build up a pipeline that counts the number of chromsomes that have data in this file. The first column contains the chromosomes:
+Let's build up a pipeline that counts the number of chromosomes that have data in this file. The first column contains the chromosomes:
 
 	$ cut -f1 CellContigs.bedRnaElements
 
@@ -100,11 +96,11 @@ The `uniq` command looks for runs of identical elements. Let's `sort` the list f
 
 ## Finding things in files and directories
 
-What if we only wanted the lines that matched a specific chromsome? Use `grep` to search input for particular patterns. We can output the contents of the file to the screen, and then search that output for lines that match chromosome X.
+What if we only wanted the lines that matched a specific chromosome? Use `grep` to search input for particular patterns. We can output the contents of the file to the screen, and then search that output for lines that match chromosome X.
 
 	$ cat CellContigs.bedRnaElements | grep chrX
 
-***Exercise***: Search for the chromsome 1 instead of chromosome X. What happens?
+***Exercise***: Search for the chromosome 1 instead of chromosome X. What happens?
 
 Why do we get chromsome 1, 10, 11, 12, etc? Use the `-w` flag to get full words!
 
@@ -177,3 +173,19 @@ done
 ```
 
 ***Exercise***: Modify this script to print the data for the specified chromsome from the input file to an output file
+
+# Logging into a remote machine
+
+Finally, we are going to cover how to log into a remote machine. Even if you don't use the bash shell for your day-to-day work on your computer, once you log into a server (such as the Duke HPC), the bash shell will be your only interface.
+
+Open a new window. We are going to use the `ssh` (secure shell) command. This creates a secure connection to a remote server.
+
+    $ ssh netid@dscr-slogin-01.oit.duke.edu
+
+You will see a message about not being able to establish authenticity of the hose. You will always get this message the first time you log into a server. Type `yes` and then type your netID password.
+
+Note that the prompt changed. Try `whoami` or `pwd` or `hostname` to show other differences (and test where you are before doing things!).
+
+To log out and return to your laptop:
+
+    $ exit
