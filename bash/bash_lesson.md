@@ -76,7 +76,7 @@ To save this output to a file, we can **redirect** the output into a file rather
 
 	$ cut -f 1-3 CellContigs.bedRnaElements > small.bed
 
-***Excercise*** : Create a small sample file named "sample_file.bed", including the first 200 lines and all columns except 4th column. *Hint*: This will take two separate steps and involve creating a temporary file. Also, the `history` command might be useful.
+***Excercise*** : Create a small sample file named "sample\_file.bed", including the first 200 lines and all columns except 4th column. *Hint*: This will take two separate steps and involve creating a temporary file. Also, the `history` command might be useful.
 
 We've introduced **wildcards** to operate on files that match a patters and **redirection** to save output to a file instead of the screen. The final concept in this section is combining commands using **pipes**.
 
@@ -86,9 +86,14 @@ Let's build up a pipeline that counts the number of chromosomes that have data i
 
 	$ cut -f1 CellContigs.bedRnaElements
 
-The `uniq` command will print out unique elements in the input. We could save column 1 to a file and then run uniq, but it is shorter to simply *pipe* the output from the first command as input into the second command:
+The `uniq` command will print out unique elements in the input. The standard usage of `uniq`:
+
+    $ uniq CellContigs.bedRnaElements
+
+If we wanted the unique chromosomes, we could save column 1 to a file and then run uniq, but it is shorter to simply *pipe* the output from the first command as input into the second command:
 
 	$ cut -f1 CellContigs.bedRnaElements | uniq
+
 
 The `uniq` command looks for runs of identical elements. Let's `sort` the list first before running `uniq`. Bash has a command for that, and we can chain together multiple commands using `|`.
 
@@ -96,17 +101,27 @@ The `uniq` command looks for runs of identical elements. Let's `sort` the list f
 
 ## Finding things in files and directories
 
-What if we only wanted the lines that matched a specific chromosome? Use `grep` to search input for particular patterns. We can output the contents of the file to the screen, and then search that output for lines that match chromosome X.
+What if we only wanted the lines that matched a specific chromosome? Use `grep` to search input for particular patterns. The syntax for grep is `grep pattern input`.
 
-	$ cat CellContigs.bedRnaElements | grep chrX
+	$ grep chrX CellContigs.bedRnaElements
 
 ***Exercise***: Search for the chromosome 1 instead of chromosome X. What happens?
 
-Why do we get chromsome 1, 10, 11, 12, etc? Use the `-w` flag to get full words!
+Why do we get chromsome 1, 10, 11, 12, etc? Use the `-w` flag to get full words.
 
 We can use more complex patterns with `grep` (and other tools) by using *regular expressions*. For example, to find both chromosome X and Y:
 
 	$ cat CellContigs.bedRnaElements | grep chr[XY]
+
+### Extra stuff
+If there is time, you can show more regex examples:
+
+    $ grep [unannotated] CellContigs.bedRnaElements
+
+    $ cat CellContigs.bedRnaElements | grep chr[0-9]
+
+    $ cat CellContigs.bedRnaElements | grep chr[A-Z]
+
 
 ## Loops
 
@@ -135,7 +150,7 @@ We can modify the body of the loop (what's between `do` and `done`) to run a dif
 	> head n -1 CellContigs.bedRnaElements
 	> done
 
-***Exercise***: Modify the loop to use the `grep` example from above to print the data from the X and Y chromosomes to two new files.
+***Exercise***: Modify the lines between `do` and `done` to use the `grep` example from above to create two new files containing data from the X and the Y chromosomes.
 
 ## Putting actions in scripts
 
