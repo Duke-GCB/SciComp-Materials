@@ -1,3 +1,37 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+  - [date: "Tuesday, October 10, 2015"](#date-tuesday-october-10-2015)
+  - [Concepts covered](#concepts-covered)
+  - [TOC](#toc)
+- [Lessons](#lessons)
+  - [Cluster basics](#cluster-basics)
+    - [What are some of reasons to access a remote computer system?](#what-are-some-of-reasons-to-access-a-remote-computer-system)
+    - [Advantages of using HPC/HTC vs. Cloud systems](#advantages-of-using-hpchtc-vs-cloud-systems)
+    - [Some disadvantages](#some-disadvantages)
+    - [What does a cluster look like?](#what-does-a-cluster-look-like)
+  - [Filesystems and Storage](#filesystems-and-storage)
+  - [Using & installing software](#using-&-installing-software)
+  - [Working with the scheduler](#working-with-the-scheduler)
+    - [Running & submitting jobs](#running-&-submitting-jobs)
+    - [Choosing the proper resources for your job](#choosing-the-proper-resources-for-your-job)
+      - [Time](#time)
+      - [Memory:](#memory)
+      - [# of Cores](#-of-cores)
+      - [# of Nodes](#-of-nodes)
+      - [Partitions (Queues)](#partitions-queues)
+    - [Creating submission scripts](#creating-submission-scripts)
+    - [Example batch script (SLURM)](#example-batch-script-slurm)
+        - [JOB STATE CODES](#job-state-codes)
+        - [Node states](#node-states)
+        - [Running a job array](#running-a-job-array)
+        - [Job failures](#job-failures)
+        - [How to get help](#how-to-get-help)
+      - [Other resources](#other-resources)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: "HPC Introduction"
 author: "Darren Boss"
@@ -11,10 +45,6 @@ date: "Tuesday, October 10, 2015"
 * Explaining the different between cloud computing and HPC
 * Interacting with the job scheduler
 * Understand batch script options how how to submit
-
-## TOC
-* [Cluster basics](#cluster-basics)
-* [Copy files over ssh]
 
 Note: The large portion of this material was taken from a Data Carpentry workshop taught at a Harvard FAS Research Computing Genomics workshop earlier this year. Course materials can be found at the Github repository at [https://github.com/fasrc/2015-08-19-HU_FASRC](https://github.com/fasrc/2015-08-19-HU_FASRC)
 
