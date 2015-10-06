@@ -61,7 +61,6 @@ The user accesses the compute cluster through one or more login nodes, and submi
 What is a filesystem?
 Storage on most compute systems is not what and where you think they are! Physical disks are bundled together into a virtual volume; this virtual volume may represent one filesystem, or may be divided up, or partitioned, into multiple filesystems. And your directories then reside within one of these fileystems. Filesystems are accessed over the network through mount points.
 
-![Filesystem definition diagram](images/filesystems-generic.png)
 There are often multiple storage/filesystems options available for you to do your work. The most common are:
 * home: where you land when you first login
 * shared (lab): a directory on the network
