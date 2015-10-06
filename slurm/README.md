@@ -455,6 +455,7 @@ srun /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i ~
 * Run memory job
 
 ##### How to get help and training
+* If you don't have access to the DSCR, check the point of contact list and request access if you are able [https://wiki.duke.edu/display/SCSC/DSCR+Point+of+Contact+list](https://wiki.duke.edu/display/SCSC/DSCR+Point+of+Contact+list)
 * make sure to always give your netid, jobid and any error messages when
 * for DSCR help contact help@oit.duke.edu and make sure to indicate you are requesting assistance on the DSCR
 * HARDAC support email gcb-help@duke.edu
