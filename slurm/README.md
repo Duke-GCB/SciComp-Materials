@@ -97,7 +97,7 @@ The user accesses the compute cluster through one or more login nodes, and submi
 * Use the scheduler command `sinfo` to inspect your local cluster. Confer with your neighbor. What is going on here?
 * Try using the `sinfo --long` command. Any more insights?
 * Make note of how much memory and cpu core are on the login node
-  * Command to count of number of cpu cores is "nproc" and querying the amount of memory is "free -g"
+  * Command to count of number of cpu cores is `nproc` and querying the amount of memory is `free -g`
 
 ## Filesystems and Storage
 
@@ -135,9 +135,9 @@ Shared (lab) systems are typically the same, though may vary from site to site a
 * Change into the repository materials directory
 * Cd into the directory containing the bed files
 * Copy a single bedRnaElements file to your home directory on the DSCR
-  * scp CellCiptapContigs.bedRnaElements netid@dscr-xfer-01.oit.duke.edu:
+  * `scp CellCiptapContigs.bedRnaElements netid@dscr-xfer-01.oit.duke.edu:`
 * In another shell, log into the DSCR
-  * ssh netid@dscr-slogin-02.oit.duke.edu
+  * `ssh netid@dscr-slogin-02.oit.duke.edu`
 * We copied the file to one server but it exists on the other server as well, how is this possible?
 * What filesystem are you currently on? Can you figure that out?
 * Use the `df .` command or `df -h .` for human readable output.
@@ -149,9 +149,9 @@ Shared (lab) systems are typically the same, though may vary from site to site a
 * rsync -a cshl_rna_seq dtb17@dscr-xfer-01.oit.duke.edu:
 * show verbose and dry-run as well
 * use curl and wget to download a file from
-  * wget [https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)
+  * `wget [https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)`
 
-  * curl -O [https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)
+  * `curl -O [https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)`
 
 ## Using & installing software 
 
@@ -178,7 +178,7 @@ Depending on the nature of the software and the experience of the software devel
 * Download the Samtools source code to your home directory
 * Don't download it to your laptop first, use the wget or curl command to download it directly to the cluster
 * Extract the source tarball
-  * tar xvfj samtools-1.2.tar.bz2
+  * `tar xvfj samtools-1.2.tar.bz2`
 * Compiling source code and be a resource intensive process so lets all by good citizens and extract and compile the source code on a compute node of the cluster
 
 ## Working with the scheduler
@@ -222,7 +222,7 @@ sbatch --mem=1000 --wrap="uname -a; free -g; nproc"
 
 **Exercise**
 * Submit a batch job to extract the samtools archive
-  * The command to extract bz2 archives in the current directory is "tar xvfj filename"
+  * The command to extract bz2 archives in the current directory is `tar xvfj filename`
 * Start an interactive job and follow the instructions on the htslib website on how to compile and install samtools
 
 The other way is to create a batch submission script file, which has these parameters embedded inside, and submit your script to the scheduler:
@@ -248,7 +248,7 @@ Another way to think of 'reserving' a compute node for you job is like making a 
 * if you bring fewer guests and don't notify the staff in advance, the extra seats are wasted; no one else can take the empty places, and the restaurant may lose money.
 
 “Never use a piece of bioinformatics software for the first time without looking to see what command-line options are available and what default parameters are being used”
-→   -- acgt.me · by Keith Bradnam
+   -- acgt.me · by Keith Bradnam
 
 #### Time
 This is determined by test runs that you do on your code during an interactive session.
@@ -262,7 +262,7 @@ We recommend that you check the software docs for memory requirements. But often
 
 Once the job has finished, ask the scheduler how much RAM was used by using the `sacct` command to get post-run job info:
 ```bash
-sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed→# RAM requested/used!!
+sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed  # RAM requested/used!!
 ```
 The `ReqMem` field is how much you asked for and `MaxRSS` is how much was actually used. Now go back and adjust your RAM request in your sbatch command or submission script.
 
