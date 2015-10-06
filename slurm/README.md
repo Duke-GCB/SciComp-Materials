@@ -324,10 +324,12 @@ The following is an example submission script for an example `bedtools` run, whi
 ```
 The bedtools executatble is located at /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools on the DSCR.
 **Exercises**
+* Clone the materials git repository from your github account on the DSCR
 * In an interactive session
   * Sort an import bed file using the suggestions for using sort in the above tutorial
   * Run bedtools merge on the sorted bedfile
 * Combine the above slrum template with the command and submit the job as a batch job
+  * There is a template in the slurm folder in the git repository you just checked out
   * Don't forget to enter your email address in the script
 
 #### JOB STATE CODES
