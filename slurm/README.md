@@ -1,42 +1,40 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-  - [](#)
-  - [date: "Tuesday, October 10, 2015"](#date-tuesday-october-10-2015)
-  - [Concepts covered](#concepts-covered)
-- [Lessons](#lessons)
-  - [Cluster basics](#cluster-basics)
-    - [What are some of reasons to access a remote computer system?](#what-are-some-of-reasons-to-access-a-remote-computer-system)
-    - [Advantages of using HPC/HTC vs. Cloud systems](#advantages-of-using-hpchtc-vs-cloud-systems)
-    - [Some disadvantages](#some-disadvantages)
-    - [What does a cluster look like?](#what-does-a-cluster-look-like)
-  - [Filesystems and Storage](#filesystems-and-storage)
-  - [Using & installing software](#using-&-installing-software)
-  - [Working with the scheduler](#working-with-the-scheduler)
-    - [Running & submitting jobs](#running-&-submitting-jobs)
-    - [Choosing the proper resources for your job](#choosing-the-proper-resources-for-your-job)
-      - [Time](#time)
-      - [Memory:](#memory)
-      - [# of Cores](#-of-cores)
-      - [# of Nodes](#-of-nodes)
-      - [Partitions (Queues)](#partitions-queues)
-    - [Creating submission scripts](#creating-submission-scripts)
-    - [Example batch script (SLURM)](#example-batch-script-slurm)
-        - [JOB STATE CODES](#job-state-codes)
-        - [Node states](#node-states)
-        - [Running a job array](#running-a-job-array)
-        - [Job failures](#job-failures)
-        - [How to get help](#how-to-get-help)
-      - [Other resources](#other-resources)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 ---
 title: "HPC Introduction"
 author: "Darren Boss"
 date: "Tuesday, October 10, 2015"
 ---
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Concepts covered](#concepts-covered)
+- [Cluster basics](#cluster-basics)
+  - [What are some of reasons to access a remote computer system?](#what-are-some-of-reasons-to-access-a-remote-computer-system)
+  - [Advantages of using HPC/HTC vs. Cloud systems](#advantages-of-using-hpchtc-vs-cloud-systems)
+- [HPC vs. Cloud:](#hpc-vs-cloud)
+  - [Some disadvantages](#some-disadvantages)
+  - [What does a cluster look like?](#what-does-a-cluster-look-like)
+- [Filesystems and Storage](#filesystems-and-storage)
+- [Using & installing software](#using-&-installing-software)
+- [Working with the scheduler](#working-with-the-scheduler)
+  - [Running & submitting jobs](#running-&-submitting-jobs)
+  - [Choosing the proper resources for your job](#choosing-the-proper-resources-for-your-job)
+    - [Time](#time)
+    - [Memory:](#memory)
+    - [# of Cores](#-of-cores)
+    - [# of Nodes](#-of-nodes)
+    - [Partitions (Queues)](#partitions-queues)
+  - [Creating submission scripts](#creating-submission-scripts)
+  - [Example batch script (SLURM)](#example-batch-script-slurm)
+    - [JOB STATE CODES](#job-state-codes)
+    - [Node states](#node-states)
+  - [Managing jobs and getting job information](#managing-jobs-and-getting-job-information)
+      - [Running a job array](#running-a-job-array)
+      - [Job failures](#job-failures)
+      - [How to get help and training](#how-to-get-help-and-training)
+    - [Other resources](#other-resources)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Concepts covered
 * Why use a cluster?
@@ -48,7 +46,6 @@ date: "Tuesday, October 10, 2015"
 
 Note: The large portion of this material was taken from a Data Carpentry workshop taught at a Harvard FAS Research Computing Genomics workshop earlier this year. Course materials can be found at the Github repository at [https://github.com/fasrc/2015-08-19-HU_FASRC](https://github.com/fasrc/2015-08-19-HU_FASRC)
 
-# Lessons
 ## Cluster basics
 Clusters, are often referred to as  high-performance computing (HPC) or high-throughput computing systems. Resources also include other high-end compute systems such as distributed databases, large-scale fileystems, and software-defined networks.
 
@@ -64,6 +61,21 @@ Clusters, are often referred to as  high-performance computing (HPC) or high-thr
 * no need to transfer files before and after a remote cloud session
 * access to local expertise
 * cost: often local resources may be free or you'll know the cost up-front
+
+## HPC vs. Cloud:
+
+| HPC | Cloud |
+|:----|:------|
+| User account on the system | root account on the system |
+| Limited control of the system | Full control of the system |
+| Central shared file system | Local file system |
+| Jobs submitted into a queue | Jobs executed on each resource |
+| Account-based isolation | OS-based isolation |
+| Batch-oriented execution of applications | support for batch or interactive applications |
+| Request for resource and time allocation | Pay-per-use |
+| etc. | etc.|
+
+![HPC vs. Cloud](https://raw.githubusercontent.com/datacarpentry/cloud-genomics/master/lessons/images/HpcVsCloud.png)
 
 ### Some disadvantages
 
@@ -84,7 +96,7 @@ The user accesses the compute cluster through one or more login nodes, and submi
 * Use the scheduler command `sinfo` to inspect your local cluster. Confer with your neighbor. What is going on here?
 * Try using the `sinfo --long` command. Any more insights?
 * Make note of how much memory and cpu core are on the login node
-** Command to count of number of cpu cores is "nproc" and querying the amount of memory is "free -g"
+  * Command to count of number of cpu cores is "nproc" and querying the amount of memory is "free -g"
 
 ## Filesystems and Storage
 
@@ -107,11 +119,13 @@ Shared (lab) systems are typically the same, though may vary from site to site a
   * /netscratch, time limited but no quota, files are deleted if they haven't been touched in 30 days. Goes away on November 15th.
   * /datacommons/netscratch, no time or quota limit until the new scratch space is in place
   * New scratch space will be /work, it's not decided on the time retention but might be based on file size with a purge range between 30-90 days
+  * Lab/Group quotas where your home directory is located initially have a 500GB limit
 
 * On HARDAC
   * All home directories and everything under /data is considered scratch
   * No automatic purge but there are 5GB quotas on home directories and 5TB for lab shares
   * The scratch space is .5PB and consists of 240 hard drives grouped in to 24 raid groups
+  * No primary data should be kept on the cluster file system, data needs to be staged in for analysis and copied off the system to systems that are backed up
 
 **Exercises**
 
@@ -123,19 +137,20 @@ Shared (lab) systems are typically the same, though may vary from site to site a
   * scp CellCiptapContigs.bedRnaElements netid@dscr-xfer-01.oit.duke.edu:
 * In another shell, log into the DSCR
   * ssh netid@dscr-slogin-02.oit.duke.edu
-* We copied the file to one server but it exists on the other server as well, how is this possible
+* We copied the file to one server but it exists on the other server as well, how is this possible?
 * What filesystem are you currently on? Can you figure that out?
 * Use the `df .` command or `df -h .` for human readable output.
 * Change to /netscratch and /datacommons/netscratch directory and try the command again
-* Cd to the directory one level up from where the bed files are located
+* On your local system, cd to the directory one level up from where the bed files are located
 * Perform a recursive scp of the cshl_rna_seq directory
   * scp -r cshl_rna_seq netid@dscr-xfer-01.oit.duke.edu
 * Show an rsync example
 * rsync -a cshl_rna_seq dtb17@dscr-xfer-01.oit.duke.edu:
 * show verbose and dry-run as well
 * use curl and wget to download a file from
-  * wget https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
-  * curl -O https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
+  * wget [https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)
+
+  * curl -O [https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)
 
 ## Using & installing software 
 
@@ -173,7 +188,7 @@ As mentioned before, the scheduler is responsible for listening to your job requ
 
 There are two ways to run jobs on a cluster. One, usually done at the start, is to get an
 interactive/foreground session on a compute node. This looks and behaves exactly as when you first log into a compute
-cluster, on a login node, but the work is being done a compute node, a worker node on the cluster. This is▸
+cluster, on a login node, but the work is being done a compute node, a worker node on the cluster. This is
 usually a best practice technique, and should be done for all work that will tie up resources (e.g. CPU-
 or memory-intensive tasks).
 
@@ -312,8 +327,9 @@ The following is an example submission script for an example `bedtools` run, whi
   * Run bedtools merge on the sorted bedfile
 * Combine the above slrum template with the command and submit the job as a batch job
   * Don't forget to enter your email address in the script
-##### JOB STATE CODES
+#### JOB STATE CODES
 ```bash
+squeue
 Jobs  typically  pass  through  several  states  in the course of their
 execution.   The  typical  states  are  PENDING,  RUNNING,   SUSPENDED,
 COMPLETING, and COMPLETED.  An explanation of each state follows.
@@ -346,9 +362,10 @@ COMPLETING, and COMPLETED.  An explanation of each state follows.
        TO  TIMEOUT         Job terminated upon reaching its time limit.
 ```
 
-##### Node states
+#### Node states
 
 ```bash
+sinfo
    ALLOCATED
     The node has been allocated to one or more jobs.
    COMPLETING
@@ -370,13 +387,39 @@ COMPLETING, and COMPLETED.  An explanation of each state follows.
    UNKNOWN
     The SLURM controller has just started and the node's state has not yet been determined.
 ```
+### Managing jobs and getting job information
 
-* Check memory use
+There are several commands that you can use to control and get info about your jobs:
+
+scancel` will become your friend! At some point, you'll fire off one or more jobs, and realize you've
+made a mistake. (What? You don't make them? Then you can forget about this command) Here are a
+few examples of `scancel` in action:
+
 ```bash
-sacct -o maxrss -j jobid
+scancel JOBID                                       # specific job
+scancel -u dtb17                                    # ALL my jobs
+scancel -u dtb17 -J many_blast_jobs                 # named jobs
+scancel -u dtb17 -p gcb                             # ALL in partition
 ```
+squeue` will give you pending (to be done), running, and recently completed job info. Some examples:
+
+```bash
+squeue -u dtb17                                     # jobs for bfreeman
+squeue -u dtb17 --states=R | wc –l                  # # of Running jobs
+```
+
+sacct` will give you current and historical information, since time began or you were an HPC-infant,
+whichever came first. More examples:
+
+```bash
+sacct -u dtb17                                      # jobs for bfreeman
+sacct -u dtb17 -p common --starttime=9/1/15         # same+bigmem partition
+sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed # RAM requested & used!!
+```
+
+* Run dscr_mem_kill.sbatch`
 * Lines with and without srun
-* Talk about exit codes
+* Examine exit codes
 * 0 is normal and anything else is not
 * Kill signals
 * SIGKILL is 9 and SIGTERM is 15
@@ -408,13 +451,22 @@ srun /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i ~
 * Mail-type can be set to BEGIN, END, FAIL, REQUEUE, and ALL
 * Run memory job
 
-##### How to get help
-* make sure to always give your netid, jobid and any error messages
+##### How to get help and training
+* make sure to always give your netid, jobid and any error messages when
 * for DSCR help contact help@oit.duke.edu and make sure to indicate you are requesting assistance on the DSCR
 * HARDAC support email gcb-help@duke.edu
 * Training at Duke [https://training.oit.duke.edu/enroll/index.php/public_research](https://training.oit.duke.edu/enroll/index.php/public_research)
 * Innovation CO-LAB at Duke [https://training.oit.duke.edu/enroll/index.php/public_colab](https://training.oit.duke.edu/enroll/index.php/public_colab)
+* Harvard Reseach Computing has some excellent documentation on effective use of SLURM at [https://rc.fas.harvard.edu/resources/documentation/](https://rc.fas.harvard.edu/resources/documentation/)
 
 #### Other resources
-* VM Manage [https://vm-manage.oit.duke.edu/](https://vm-manage.oit.duke.edu/)
-* IPlant Atmosphere [http://www.iplantcollaborative.org/](http://www.iplantcollaborative.org/)
+* HPC offerings:
+  * DSCR: https://wiki.duke.edu/display/SCSC/DSCR
+  * HARDAC: https://wiki.duke.edu/display/HAR/Welcome+to+HARDAC
+  * XSEDE: https://www.xsede.org/high-performance-computing
+* Cloud computing offerings:
+  * VM Manage [https://vm-manage.oit.duke.edu/](https://vm-manage.oit.duke.edu/)
+  * Amazon EC2: http://aws.amazon.com/ec2/
+  * Microsoft Azure: https://azure.microsoft.com/en-us/
+  * Google Cloud Platform: https://cloud.google.com/
+  * iPlant's Atmosphere: http://www.iplantcollaborative.org/ci/atmosphere
