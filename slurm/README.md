@@ -394,7 +394,7 @@ sinfo
 
 There are several commands that you can use to control and get info about your jobs:
 
-scancel` will become your friend! At some point, you'll fire off one or more jobs, and realize you've
+`scancel` will become your friend! At some point, you'll fire off one or more jobs, and realize you've
 made a mistake. (What? You don't make them? Then you can forget about this command) Here are a
 few examples of `scancel` in action:
 
@@ -404,14 +404,14 @@ scancel -u dtb17                                    # ALL my jobs
 scancel -u dtb17 -J many_blast_jobs                 # named jobs
 scancel -u dtb17 -p gcb                             # ALL in partition
 ```
-squeue` will give you pending (to be done), running, and recently completed job info. Some examples:
+`squeue` will give you pending (to be done), running, and recently completed job info. Some examples:
 
 ```bash
 squeue -u dtb17                                     # jobs for dtb17
 squeue -u dtb17 --states=R | wc –l                  # # of Running jobs
 ```
 
-sacct` will give you current and historical information, since time began or you were an HPC-infant,
+`sacct` will give you current and historical information, since time began or you were an HPC-infant,
 whichever came first. More examples:
 
 ```bash
@@ -420,7 +420,7 @@ sacct -u dtb17 -p common --starttime=9/1/15         # same+common partition
 sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed # RAM requested & used!!
 ```
 
-* Run dscr_mem_kill.sbatch`
+* Run `dscr_mem_kill.sbatch`
 * Lines with and without srun
 * Examine exit codes
 * 0 is normal and anything else is not
