@@ -444,8 +444,8 @@ inputs=(CellCiptapContigs.bedRnaElements CellContigs.bedRnaElements CytosolCipta
 bed_file=${inputs[$TASK_ID]}
 sorted_bed_file=$(basename $bed_file).sort.bed
 srun sleep 30
-srun sort -k1,1 -k2,2n ~/cshl_rna_seq/$bed_file > ~/cshl_rna_seq/$sorted_bed_file
-srun /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i ~/cshl_rna_seq/$sorted_bed_file
+srun sort -k1,1 -k2,2n cshl_rna_seq/$bed_file > cshl_rna_seq/$sorted_bed_file
+srun /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i cshl_rna_seq/$sorted_bed_file
 ```
 ##### Job failures
 * Emails on job failure
