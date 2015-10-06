@@ -93,6 +93,7 @@ Clusters are simply a grouping of computers with the same components (RAM, disk,
 The user accesses the compute cluster through one or more login nodes, and submits jobs to the scheduler, which will dispatch to and collect the completed work from the compute nodes. Frequently, clusters have shared disks, or filesystems, of various flavors where you can store your data, programs, and use for in-job execution (working or scratch areas)
 
 **Exercises**
+* ssh into the DSCR, either using dscr-slogin-01.oit.duke.edu or 02
 * Use the scheduler command `sinfo` to inspect your local cluster. Confer with your neighbor. What is going on here?
 * Try using the `sinfo --long` command. Any more insights?
 * Make note of how much memory and cpu core are on the login node
@@ -128,9 +129,9 @@ Shared (lab) systems are typically the same, though may vary from site to site a
   * No primary data should be kept on the cluster file system, data needs to be staged in for analysis and copied off the system to systems that are backed up
 
 **Exercises**
-
-* Clone the materials repository to your local computer
+* Fork the materials repository to your own github account
   * Repository repo url is [https://github.com/Duke-GCB/GCB-Academy-2015-10-05.git](https://github.com/Duke-GCB/GCB-Academy-2015-10-05.git)
+* Clone the repo to your local computer
 * Change into the repository materials directory
 * Cd into the directory containing the bed files
 * Copy a single bedRnaElements file to your home directory on the DSCR
@@ -300,7 +301,7 @@ When creating submission scripts, use your favorite text editor and include the 
 * what mail notifications you want, if any
 * email notification address (or text msg email address if you want an SMS alert!)
 
-All the scheduler directives need to be at the start of the file, then your module/software loads, and then your actual job commands.▸
+All the scheduler directives need to be at the start of the file, then your module/software loads, and then your actual job commands.
 
 ### Example batch script (SLURM)
 
@@ -321,12 +322,14 @@ The following is an example submission script for an example `bedtools` run, whi
 #SBATCH --mail-user=EMAIL@duke.edu  # Email where notifications will be sent
 #Your actual work goes after this line
 ```
+The bedtools executatble is located at /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools on the DSCR.
 **Exercises**
 * In an interactive session
   * Sort an import bed file using the suggestions for using sort in the above tutorial
   * Run bedtools merge on the sorted bedfile
 * Combine the above slrum template with the command and submit the job as a batch job
   * Don't forget to enter your email address in the script
+
 #### JOB STATE CODES
 ```bash
 squeue
@@ -404,7 +407,7 @@ scancel -u dtb17 -p gcb                             # ALL in partition
 squeue` will give you pending (to be done), running, and recently completed job info. Some examples:
 
 ```bash
-squeue -u dtb17                                     # jobs for bfreeman
+squeue -u dtb17                                     # jobs for dtb17
 squeue -u dtb17 --states=R | wc –l                  # # of Running jobs
 ```
 
@@ -412,8 +415,8 @@ sacct` will give you current and historical information, since time began or you
 whichever came first. More examples:
 
 ```bash
-sacct -u dtb17                                      # jobs for bfreeman
-sacct -u dtb17 -p common --starttime=9/1/15         # same+bigmem partition
+sacct -u dtb17                                      # jobs for dtb17
+sacct -u dtb17 -p common --starttime=9/1/15         # same+common partition
 sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed # RAM requested & used!!
 ```
 
