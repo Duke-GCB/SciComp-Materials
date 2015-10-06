@@ -1,11 +1,10 @@
-# gcb-academy-python
-Python Lessons for GCB Academy course on Scientific Computing
+python
+==========
 
-To view .ipynb notebooks online without installing IPython Notebook, use [nbviewer.org](http://nbviewer.ipython.org/github/Duke-GCB/GCB-Academy-2015-02-05/tree/master/python)
+Introduction to programming with Python
 
-## This lesson should take 4 hours or less to teach, and is divided into 4 parts:
+Notebooks used in the workshop are available in the  [dleehr/scicomp-python](https://github.com/dleehr/scicomp-python) repository.
 
-* Part I: Introduction to Python using the interactive prompt
-* Part II: Writing a Python script
-* Part III: Biopython & Regular Expressions
-* Part IV: Pandas & the iPython notebook
+Completed notebooks are on the [master branch](https://github.com/dleehr/scicomp-python/tree/master).
+Blank notebooks are on the [workshop branch](https://github.com/dleehr/scicomp-python/tree/workshop).
+
