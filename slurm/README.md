@@ -2,9 +2,9 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+  - [](#)
   - [date: "Tuesday, October 10, 2015"](#date-tuesday-october-10-2015)
   - [Concepts covered](#concepts-covered)
-  - [TOC](#toc)
 - [Lessons](#lessons)
   - [Cluster basics](#cluster-basics)
     - [What are some of reasons to access a remote computer system?](#what-are-some-of-reasons-to-access-a-remote-computer-system)
@@ -104,38 +104,38 @@ Shared (lab) systems are typically the same, though may vary from site to site a
 "
 
 * On the DSCR/DCC
-** /netscratch, time limited but no quota, files are deleted if they haven't been touched in 30 days. Goes away on November 15th.
-** /datacommons/netscratch, no time or quota limit until the new scratch space is in place
-** New scratch space will be /work, it's not decided on the time retention but might be based on file size with a purge range between 30-90 days
+  * /netscratch, time limited but no quota, files are deleted if they haven't been touched in 30 days. Goes away on November 15th.
+  * /datacommons/netscratch, no time or quota limit until the new scratch space is in place
+  * New scratch space will be /work, it's not decided on the time retention but might be based on file size with a purge range between 30-90 days
 
 * On HARDAC
-** All home directories and everything under /data is considered scratch
-** No automatic purge but there are 5GB quotas on home directories and 5TB for lab shares
-** The scratch space is .5PB and consists of 240 hard drives grouped in to 24 raid groups
+  * All home directories and everything under /data is considered scratch
+  * No automatic purge but there are 5GB quotas on home directories and 5TB for lab shares
+  * The scratch space is .5PB and consists of 240 hard drives grouped in to 24 raid groups
 
 **Exercises**
 
 * Clone the materials repository to your local computer
-** Repository repo url is [https://github.com/Duke-GCB/GCB-Academy-2015-10-05.git](https://github.com/Duke-GCB/GCB-Academy-2015-10-05.git)
+  * Repository repo url is [https://github.com/Duke-GCB/GCB-Academy-2015-10-05.git](https://github.com/Duke-GCB/GCB-Academy-2015-10-05.git)
 * Change into the repository materials directory
 * Cd into the directory containing the bed files
 * Copy a single bedRnaElements file to your home directory on the DSCR
-** scp CellCiptapContigs.bedRnaElements netid@dscr-xfer-01.oit.duke.edu:
+  * scp CellCiptapContigs.bedRnaElements netid@dscr-xfer-01.oit.duke.edu:
 * In another shell, log into the DSCR
-** ssh netid@dscr-slogin-02.oit.duke.edu
+  * ssh netid@dscr-slogin-02.oit.duke.edu
 * We copied the file to one server but it exists on the other server as well, how is this possible
 * What filesystem are you currently on? Can you figure that out?
 * Use the `df .` command or `df -h .` for human readable output.
 * Change to /netscratch and /datacommons/netscratch directory and try the command again
 * Cd to the directory one level up from where the bed files are located
 * Perform a recursive scp of the cshl_rna_seq directory
-** scp -r cshl_rna_seq netid@dscr-xfer-01.oit.duke.edu
+  * scp -r cshl_rna_seq netid@dscr-xfer-01.oit.duke.edu
 * Show an rsync example
 * rsync -a cshl_rna_seq dtb17@dscr-xfer-01.oit.duke.edu:
 * show verbose and dry-run as well
 * use curl and wget to download a file from
-** wget https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
-** curl -O https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
+  * wget https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
+  * curl -O https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
 
 ## Using & installing software 
 
@@ -162,7 +162,7 @@ Depending on the nature of the software and the experience of the software devel
 * Download the Samtools source code to your home directory
 * Don't download it to your laptop first, use the wget or curl command to download it directly to the cluster
 * Extract the source tarball
-** tar xvfj samtools-1.2.tar.bz2
+  * tar xvfj samtools-1.2.tar.bz2
 * Compiling source code and be a resource intensive process so lets all by good citizens and extract and compile the source code on a compute node of the cluster
 
 ## Working with the scheduler
@@ -180,22 +180,22 @@ or memory-intensive tasks).
 To get an interactive session, you issue the `srun` command with the appropriate parameters for requesting
 the resources you require. For example:
 
-``bash
+```bash
 srun --pty --mem 1000 /bin/bash
-``
+```
 
 This command requests from the scheduler a foreground/interactive job with the following resources:
-``bash
+```bash
 --pty           # a parameter specific for the srun command for bash sessions
 --mem 1000      # memory request, in MB
 /bin/bash       # the program we want to run, which is the bash shell
-``
+```
 
 Two additional, optional, parameters were left out; as such, SLURM will give us the defaults:
-``bash
+```bash
 -n 1            # how many cores (CPUs) we want (default = 1)
 -N 1            # how many nodes we want the cores on (not needed, as we're getting one core; required otherwise)
-``
+```
 
 The other method of running jobs on the cluster is by running a job in batch, using the `sbatch` command. On rare
 occasion, you can use this just like the `srun` example, to run a simple command:
@@ -206,14 +206,14 @@ sbatch --mem=1000 --wrap="uname -a; free -g; nproc"
 
 **Exercise**
 * Submit a batch job to extract the samtools archive
-** The command to extract bz2 archives in the current directory is "tar xvfj filename"
+  * The command to extract bz2 archives in the current directory is "tar xvfj filename"
 * Start an interactive job and follow the instructions on the htslib website on how to compile and install samtools
 
 The other way is to create a batch submission script file, which has these parameters embedded inside, and submit your script to the scheduler:
 
-``bash
+```bash
 sbatch my_batch_script.sh
-`` `
+```
 
 In all cases, the scheduler will return to you a jobID, a unique ID for your job that you can use to get info or control at that time, or refer to it historically.
 
@@ -308,10 +308,10 @@ The following is an example submission script for an example `bedtools` run, whi
 ```
 **Exercises**
 * In an interactive session
-** Sort an import bed file using the suggestions for using sort in the above tutorial
-** Run bedtools merge on the sorted bedfile
+  * Sort an import bed file using the suggestions for using sort in the above tutorial
+  * Run bedtools merge on the sorted bedfile
 * Combine the above slrum template with the command and submit the job as a batch job
-** Don't forget to enter your email address in the script
+  * Don't forget to enter your email address in the script
 ##### JOB STATE CODES
 ```bash
 Jobs  typically  pass  through  several  states  in the course of their
