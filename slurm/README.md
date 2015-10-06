@@ -7,33 +7,32 @@ date: "Tuesday, October 10, 2015"
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-  - [Concepts covered](#concepts-covered)
-- [Lessons](#lessons)
-  - [Cluster basics](#cluster-basics)
-    - [What are some of reasons to access a remote computer system?](#what-are-some-of-reasons-to-access-a-remote-computer-system)
-    - [Advantages of using HPC/HTC vs. Cloud systems](#advantages-of-using-hpchtc-vs-cloud-systems)
-  - [HPC vs. Cloud:](#hpc-vs-cloud)
-    - [Some disadvantages](#some-disadvantages)
-    - [What does a cluster look like?](#what-does-a-cluster-look-like)
-  - [Filesystems and Storage](#filesystems-and-storage)
-  - [Using & installing software](#using-&-installing-software)
-  - [Working with the scheduler](#working-with-the-scheduler)
-    - [Running & submitting jobs](#running-&-submitting-jobs)
-    - [Choosing the proper resources for your job](#choosing-the-proper-resources-for-your-job)
-      - [Time](#time)
-      - [Memory:](#memory)
-      - [# of Cores](#-of-cores)
-      - [# of Nodes](#-of-nodes)
-      - [Partitions (Queues)](#partitions-queues)
-    - [Creating submission scripts](#creating-submission-scripts)
-    - [Example batch script (SLURM)](#example-batch-script-slurm)
-        - [JOB STATE CODES](#job-state-codes)
-        - [Node states](#node-states)
-    - [Managing jobs and getting job information](#managing-jobs-and-getting-job-information)
-        - [Running a job array](#running-a-job-array)
-        - [Job failures](#job-failures)
-        - [How to get help and training](#how-to-get-help-and-training)
-      - [Other resources](#other-resources)
+- [Concepts covered](#concepts-covered)
+- [Cluster basics](#cluster-basics)
+  - [What are some of reasons to access a remote computer system?](#what-are-some-of-reasons-to-access-a-remote-computer-system)
+  - [Advantages of using HPC/HTC vs. Cloud systems](#advantages-of-using-hpchtc-vs-cloud-systems)
+- [HPC vs. Cloud:](#hpc-vs-cloud)
+  - [Some disadvantages](#some-disadvantages)
+  - [What does a cluster look like?](#what-does-a-cluster-look-like)
+- [Filesystems and Storage](#filesystems-and-storage)
+- [Using & installing software](#using-&-installing-software)
+- [Working with the scheduler](#working-with-the-scheduler)
+  - [Running & submitting jobs](#running-&-submitting-jobs)
+  - [Choosing the proper resources for your job](#choosing-the-proper-resources-for-your-job)
+    - [Time](#time)
+    - [Memory:](#memory)
+    - [# of Cores](#-of-cores)
+    - [# of Nodes](#-of-nodes)
+    - [Partitions (Queues)](#partitions-queues)
+  - [Creating submission scripts](#creating-submission-scripts)
+  - [Example batch script (SLURM)](#example-batch-script-slurm)
+    - [JOB STATE CODES](#job-state-codes)
+    - [Node states](#node-states)
+  - [Managing jobs and getting job information](#managing-jobs-and-getting-job-information)
+      - [Running a job array](#running-a-job-array)
+      - [Job failures](#job-failures)
+      - [How to get help and training](#how-to-get-help-and-training)
+    - [Other resources](#other-resources)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -47,7 +46,6 @@ date: "Tuesday, October 10, 2015"
 
 Note: The large portion of this material was taken from a Data Carpentry workshop taught at a Harvard FAS Research Computing Genomics workshop earlier this year. Course materials can be found at the Github repository at [https://github.com/fasrc/2015-08-19-HU_FASRC](https://github.com/fasrc/2015-08-19-HU_FASRC)
 
-# Lessons
 ## Cluster basics
 Clusters, are often referred to as  high-performance computing (HPC) or high-throughput computing systems. Resources also include other high-end compute systems such as distributed databases, large-scale fileystems, and software-defined networks.
 
@@ -329,7 +327,7 @@ The following is an example submission script for an example `bedtools` run, whi
   * Run bedtools merge on the sorted bedfile
 * Combine the above slrum template with the command and submit the job as a batch job
   * Don't forget to enter your email address in the script
-##### JOB STATE CODES
+#### JOB STATE CODES
 ```bash
 squeue
 Jobs  typically  pass  through  several  states  in the course of their
@@ -364,7 +362,7 @@ COMPLETING, and COMPLETED.  An explanation of each state follows.
        TO  TIMEOUT         Job terminated upon reaching its time limit.
 ```
 
-##### Node states
+#### Node states
 
 ```bash
 sinfo
@@ -393,7 +391,7 @@ sinfo
 
 There are several commands that you can use to control and get info about your jobs:
 
-`scancel` will become your friend! At some point, you'll fire off one or more jobs, and realize you've
+scancel` will become your friend! At some point, you'll fire off one or more jobs, and realize you've
 made a mistake. (What? You don't make them? Then you can forget about this command) Here are a
 few examples of `scancel` in action:
 
@@ -403,14 +401,14 @@ scancel -u dtb17                                    # ALL my jobs
 scancel -u dtb17 -J many_blast_jobs                 # named jobs
 scancel -u dtb17 -p gcb                             # ALL in partition
 ```
-`squeue` will give you pending (to be done), running, and recently completed job info. Some examples:
+squeue` will give you pending (to be done), running, and recently completed job info. Some examples:
 
 ```bash
 squeue -u dtb17                                     # jobs for bfreeman
 squeue -u dtb17 --states=R | wc –l                  # # of Running jobs
 ```
 
-`sacct` will give you current and historical information, since time began or you were an HPC-infant,
+sacct` will give you current and historical information, since time began or you were an HPC-infant,
 whichever came first. More examples:
 
 ```bash
@@ -418,7 +416,7 @@ sacct -u dtb17                                      # jobs for bfreeman
 sacct -u dtb17 -p common --starttime=9/1/15         # same+bigmem partition
 sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed # RAM requested & used!!
 ```
-``
+
 * Run dscr_mem_kill.sbatch`
 * Lines with and without srun
 * Examine exit codes
