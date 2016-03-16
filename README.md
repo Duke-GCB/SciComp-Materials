@@ -2,7 +2,7 @@ Intro to Scientific Computing - Course Materials
 =================================================
 
 Course materials for the [Introduction to Scientific Computing for Genomics]
-course that was held Feb 5-6, 2015, as part of the [GCB Academy].
+course held at least one once every year as part of the [GCB Academy].
 
 Credits
 -------
