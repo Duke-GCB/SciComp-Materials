@@ -428,6 +428,7 @@ sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed # RAM requested & us
 * 0 is normal and anything else is not
 * Kill signals
 * SIGKILL is 9 and SIGTERM is 15
+
 ##### Running a job array
 ```bash
 #!/bin/bash
