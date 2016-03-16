@@ -20,7 +20,7 @@ All material in this repository is available for reuse under the Creative
 Commons Attribution (CC-BY) and the MIT licenses. See [LICENSE.md] for
 details.
 
-[Introduction to Scientific Computing for Genomics]: http://duke-gcb.github.io/SciComp-Feb-2015/
+[Introduction to Scientific Computing for Genomics]: http://www.genome.duke.edu/gcb-academy/#COMPUTING
 [GCB Academy]: http://www.genome.duke.edu/gcb-academy/
 [Software Carpentry]: http://software-carpentry.org/
 [LICENSE.md]: LICENSE.md
