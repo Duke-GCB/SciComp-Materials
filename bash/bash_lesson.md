@@ -195,7 +195,7 @@ Finally, we are going to cover how to log into a remote machine. Even if you don
 
 Open a new window. We are going to use the `ssh` (secure shell) command. This creates a secure connection to a remote server.
 
-    $ ssh netid@dscr-slogin-01.oit.duke.edu
+    $ ssh netid@dscr-slogin-03.oit.duke.edu
 
 You will see a message about not being able to establish authenticity of the hose. You will always get this message the first time you log into a server. Type `yes` and then type your netID password.
 
