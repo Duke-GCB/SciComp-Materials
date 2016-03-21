@@ -76,7 +76,7 @@ To save this output to a file, we can **redirect** the output into a file rather
 
 	$ cut -f 1-3 CellContigs.bedRnaElements > small.bed
 
-***Excercise*** : Create a small sample file named "sample\_file.bed", including the first 200 lines and all columns except 4th column. *Hint*: This will take two separate steps and involve creating a temporary file. Also, the `history` command might be useful.
+***Exercise*** : Create a small sample file named "sample\_file.bed", including the first 200 lines and all columns except 4th column. *Hint*: This will take two separate steps and involve creating a temporary file. Also, the `history` command might be useful.
 
 We've introduced **wildcards** to operate on files that match a patters and **redirection** to save output to a file instead of the screen. The final concept in this section is combining commands using **pipes**.
 
