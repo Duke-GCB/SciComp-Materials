@@ -7,21 +7,27 @@ date: "Tuesday, October 10, 2015"
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-  - [Concepts covered](#concepts-covered)
-  - [Cluster basics](#cluster-basics)
-    - [What are some of reasons to access a remote computer system?](#what-are-some-of-reasons-to-access-a-remote-computer-system)
-    - [What does a cluster look like?](#what-does-a-cluster-look-like)
-  - [Filesystems and Storage](#filesystems-and-storage)
-  - [Using & installing software](#using-&-installing-software)
-- [the program we want to run, which is the bash shell ```](#the-program-we-want-to-run-which-is-the-bash-shell-)
-    - [Choosing the proper resources for your job For both foreground and](#choosing-the-proper-resources-for-your-job-for-both-foreground-and)
-      - [Time This is determined by test runs that you do on your code during an](#time-this-is-determined-by-test-runs-that-you-do-on-your-code-during-an)
-      - [Memory: We recommend that you check the software docs for memory](#memory-we-recommend-that-you-check-the-software-docs-for-memory)
-      - [# of Cores This is determined by your software, how anxious you are to get](#-of-cores-this-is-determined-by-your-software-how-anxious-you-are-to-get)
-      - [# of Nodes For most software in biology, this choice is simple: 1. There](#-of-nodes-for-most-software-in-biology-this-choice-is-simple-1-there)
-      - [Partitions (Queues)](#partitions-queues)
-    - [Creating submission scripts](#creating-submission-scripts)
-    - [Example batch script (SLURM)](#example-batch-script-slurm)
+- [Concepts covered](#concepts-covered)
+- [Cluster basics](#cluster-basics)
+  - [What are some of reasons to access a remote computer system?](#what-are-some-of-reasons-to-access-a-remote-computer-system)
+  - [What does a cluster look like?](#what-does-a-cluster-look-like)
+- [Filesystems and Storage](#filesystems-and-storage)
+- [Using & installing software](#using-&-installing-software)
+  - [Choosing the proper resources for your job For both foreground and](#choosing-the-proper-resources-for-your-job-for-both-foreground-and)
+    - [Time This is determined by test runs that you do on your code during an](#time-this-is-determined-by-test-runs-that-you-do-on-your-code-during-an)
+    - [Memory: We recommend that you check the software docs for memory](#memory-we-recommend-that-you-check-the-software-docs-for-memory)
+    - [# of Cores](#-of-cores)
+    - [# of Nodes](#-of-nodes)
+    - [Partitions (Queues)](#partitions-queues)
+  - [Creating submission scripts](#creating-submission-scripts)
+  - [Example batch script (SLURM)](#example-batch-script-slurm)
+    - [JOB STATE CODES ```bash squeue Jobs  typically  pass  through  several](#job-state-codes-bash-squeue-jobs--typically--pass--through--several)
+    - [Node states](#node-states)
+  - [Managing jobs and getting job information](#managing-jobs-and-getting-job-information)
+      - [Running a job array](#running-a-job-array)
+      - [Job failures](#job-failures)
+      - [How to get help and training](#how-to-get-help-and-training)
+    - [Other resources](#other-resources)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -66,7 +72,7 @@ Clusters are simply a grouping of computers with the same components (RAM, disk,
 processors/cores, and networking cards) as those in your desktop or laptop, but
 with more umph! and are networked with high-speed interconnect that can be
 accessed (indirectly) through software, the scheduler, that manages simultaneous
-execution of jobs, or analyses, by multiple persons.▸
+execution of jobs, or analyses, by multiple persons.
 
 ![Overview of a compute cluster](images/cluster-generic.png)
 
@@ -77,7 +83,7 @@ filesystems, of various flavors where you can store your data, programs, and use
 for in-job execution (working or scratch areas)
 
 **Exercises**
-* ssh into the DSCR, either using dscr-slogin-01.oit.duke.edu or 02
+* ssh into the DSCR, using the dscr-slogin-02.oit.duke.edu login node
 * Use the scheduler command `sinfo` to inspect your local cluster. Confer with
   your neighbor. What is going on here?
 * Try using the `sinfo --long` command. Any more insights?
@@ -117,20 +123,18 @@ specialized, high-availability & high-speed systems designed especially for
 large volumes of read and write operations found on HPC/HTC systems. Often times
 this is not backed and files are deleted after an aged period of time "
 
-* On the DSCR/DCC
-  * /netscratch, time limited but no quota, files are deleted if they haven't
-    been touched in 30 days. Goes away on November 15th.
-  * /datacommons/netscratch, no time or quota limit until the new scratch space
-    is in place
-  * New scratch space will be /work, it's not decided on the time retention but
-    might be based on file size with a purge range between 30-90 days
-  * Lab/Group quotas where your home directory is located initially have a 500GB
-    limit
+* On the DCC
+  * /dscrhome - where your home directory is located. 250GB group quota and two
+    week backup.
+  * /work - 100TB total volume size, not backed up and subject to file purges
+    based based on the file age and/or utilization levels
+  * /scratch - local to compute node and varies in size based on compute node
+    hardware
 
 * On HARDAC
   * All home directories and everything under /data is considered scratch
-  * No automatic purge but there are 5GB quotas on home directories and 5TB for
-    lab shares
+  * No automatic purge but there are 5GB quotas on individual home directories
+    and 5TB for lab shares
   * The scratch space is .5PB and consists of 240 hard drives grouped in to 24
     raid groups
   * No primary data should be kept on the cluster file system, data needs to be
@@ -140,33 +144,33 @@ this is not backed and files are deleted after an aged period of time "
 **Exercises**
 * Fork the materials repository to your own github account
   * Repository repo url is
-    [https://github.com/Duke-GCB/GCB-Academy-2015-10-05.git](https://github.com/Duke-GCB/GCB-Academy-2015-10-05.git)
+    [https://github.com/Duke-GCB/SciComp-Materials.git](https://github.com/Duke-GCB/SciComp-Materials.git)
 * Clone the repo to your local computer
 * Change into the repository materials directory
 * Cd into the directory containing the bed files
 * Copy a single bedRnaElements file to your home directory on the DSCR
-  * `scp CellCiptapContigs.bedRnaElements netid@dscr-xfer-01.oit.duke.edu:`
+  * `scp CellCiptapContigs.bedRnaElements netid@dscr-slogin-02.oit.duke.edu:`
 * In another shell, log into the DSCR
-  * `ssh netid@dscr-slogin-02.oit.duke.edu`
+  * `ssh netid@dscr-slogin-01.oit.duke.edu`
 * We copied the file to one server but it exists on the other server as well,
   how is this possible?
 * What filesystem are you currently on? Can you figure that out?
 * Use the `df .` command or `df -h .` for human readable output.
-* Change to /netscratch and /datacommons/netscratch directory and try the
+* Change to /work and /datacommons/netscratch directory and try the
   command again
 * On your local system, cd to the directory one level up from where the bed
   files are located
 * Perform a recursive scp of the cshl_rna_seq directory
-  * scp -r cshl_rna_seq netid@dscr-xfer-01.oit.duke.edu
+  * scp -r cshl_rna_seq netid@dscr-slogin-01.oit.duke.edu
 * Show an rsync example
-* rsync -a cshl_rna_seq dtb17@dscr-xfer-01.oit.duke.edu:
+* rsync -a cshl_rna_seq dtb17@dscr-slogin-01.oit.duke.edu:
 * show verbose and dry-run as well
 * use curl and wget to download a file from
   * `wget
-    [https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)`
+    [https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)`
 
   * `curl -O
-    [https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://github.com/Duke-GCB/GCB-Academy-2015-10-05/raw/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)`
+    [https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)`
 
 ## Using & installing software 
 
@@ -174,8 +178,12 @@ On the DSCR you will find commonly used scientific applications installed under
 /opt/apps. On other clusters tools like *Lmod* are commonly used to allow access
 to applications.
 
-```bash python --version module avail module load Anaconda python --version
-module purge python --version ```
+```bash python --version
+   module avail
+   module load Anaconda
+   python --version
+   module purge
+   python --version ```
 
 *For Perl & Python module or R packages*, we encourage you to set up directories
 in your home and/or lab folder for installing your own copies locally.
@@ -224,20 +232,29 @@ parameters for requesting the resources you require. For example:
 ```bash srun --pty --mem 1000 /bin/bash ```
 
 This command requests from the scheduler a foreground/interactive job with the
-following resources: ```bash --pty           # a parameter specific for the srun
-command for bash sessions --mem 1000      # memory request, in MB /bin/bash
-# the program we want to run, which is the bash shell ```
+following resources:
+
+```bash
+--pty           # a parameter specific for the srun command for bash sessions
+--mem 1000      # memory request, in MB /bin/bash
+/bin/bash       # the program we want to run, which is the bash shell
+```
 
 Two additional, optional, parameters were left out; as such, SLURM will give us
-the defaults: ```bash -n 1            # how many cores (CPUs) we want (default =
-1) -N 1            # how many nodes we want the cores on (not needed, as we're
-getting one core; required otherwise) ```
+the defaults:
+```bash
+-n 1            # how many cores (CPUs) we want (default = 1)
+-N 1            # how many nodes we want the cores on (not needed, as we're
+                # getting one core; required otherwise)
+```
 
 The other method of running jobs on the cluster is by running a job in batch,
 using the `sbatch` command. On rare occasion, you can use this just like the
 `srun` example, to run a simple command:
 
-```bash sbatch --mem=1000 --wrap="uname -a; free -g; nproc" ```
+```bash
+sbatch --mem=1000 --wrap="uname -a; free -g; nproc"
+```
 
 **Exercise**
 * Submit a batch job to extract the samtools archive
@@ -249,7 +266,9 @@ using the `sbatch` command. On rare occasion, you can use this just like the
 The other way is to create a batch submission script file, which has these
 parameters embedded inside, and submit your script to the scheduler:
 
-```bash sbatch my_batch_script.sh ```
+```bash
+sbatch my_batch_script.sh
+```
 
 In all cases, the scheduler will return to you a jobID, a unique ID for your job
 that you can use to get info or control at that time, or refer to it
@@ -305,7 +324,8 @@ Once the job has finished, ask the scheduler how much RAM was used by using the
 used. Now go back and adjust your RAM request in your sbatch command or
 submission script.
 
-#### # of Cores This is determined by your software, how anxious you are to get
+#### # of Cores
+This is determined by your software, how anxious you are to get
 the work done, and how well your code scales. **NOTE! Throwing more cores at a
 job does not make it run faster!** This is often a newbie mistake and will waste
 compute, making your admin grumpy. Ensure your software can use multiple cores:
@@ -316,7 +336,8 @@ slowing from 1 to 2, 4, 8, etc, assessing the decrease in time for the job run
 as you increase cores. Programs often do not scale well -- it's important to
 understand this so you can choose the appropriate number.
 
-#### # of Nodes For most software in biology, this choice is simple: 1. There
+#### # of Nodes
+For most software in biology, this choice is simple: 1. There
 are *very* few biology softare packages capable of running across multiple
 nodes. If they are capable, they will mention the use of technology called 'MPI'
 or 'openMPI'.
@@ -369,16 +390,21 @@ and
 [http://quinlanlab.org/tutorials/cshl2014/bedtools.html](http://quinlanlab.org/tutorials/cshl2014/bedtools.html)
 for an explanation of the bedtools merge command:
 
-```bash #!/bin/bash # #SBATCH -p common                # Partition to submit to
-(comma separated) #SBATCH -J gcb_bedtools          # Job name #SBATCH -n 1
-# Number of cores #SBATCH -N 1                     # Ensure that all cores are
-on one machine #SBATCH -t 0-0:10                # Runtime in D-HH:MM (or use
-minutes) #SBATCH --mem 1000               # Memory in MB #SBATCH -o
-bedtools_%j.out       # File for STDOUT (with jobid = %j) #SBATCH -e
-bedtools_%j.err       # File for STDERR (with jobid = %j) #SBATCH
---mail-type=ALL          # Type of email notification: BEGIN,END,FAIL,ALL
+```bash
+#!/bin/bash
+#
+#SBATCH -p common              # Partition to submit to (comma separated)
+#SBATCH -J gcb_bedtools        # Job name #SBATCH -n 1
+# Number of cores #SBATCH -N 1 # Ensure that all cores are on one machine
+#SBATCH -t 0-0:10              # Runtime in D-HH:MM (or use minutes)
+#SBATCH --mem 1000             # Memory in MB
+#SBATCH -o bedtools_%j.out     # File for STDOUT (with jobid = %j)
+#SBATCH -e bedtools_%j.err     # File for STDERR (with jobid = %j)
+#SBATCH --mail-type=ALL        # Type of email notification: BEGIN,END,FAIL,ALL
 #SBATCH --mail-user=EMAIL@duke.edu  # Email where notifications will be sent
-#Your actual work goes after this line ``` The bedtools executatble is located
+#Your actual work goes after this line
+```
+The bedtools executatble is located
 at /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools on the DSCR.
 **Exercises**
 * Clone the materials git repository from your github account on the DSCR
@@ -425,7 +451,9 @@ follows.
 
 #### Node states
 
-```bash sinfo ALLOCATED The node has been allocated to one or more jobs.
+```bash
+sinfo
+ALLOCATED The node has been allocated to one or more jobs.
 COMPLETING All jobs associated with this node are in the process of COMPLETING.
 This node state will be removed when all of the job's processes have terminated
 and the SLURM epilog program (if any) has terminated. See the Epilog parameter
@@ -450,8 +478,9 @@ update node command in the scontrol(1) man page or the slurm.conf(5) man page
 for more information.  IDLE The node is not allocated to any jobs and is
 available for use.  MAINT The node is currently in a reservation with a flag
 value of "maintainence".  UNKNOWN The SLURM controller has just started and the
-node's state has not yet been determined.  ``` ### Managing jobs and getting job
-information
+node's state has not yet been determined.
+```
+### Managing jobs and getting job information
 
 There are several commands that you can use to control and get info about your
 jobs:
@@ -460,22 +489,29 @@ jobs:
 jobs, and realize you've made a mistake. (What? You don't make them? Then you
 can forget about this command) Here are a few examples of `scancel` in action:
 
-```bash scancel JOBID                                       # specific job
-scancel -u dtb17                                    # ALL my jobs scancel -u
-dtb17 -J many_blast_jobs                 # named jobs scancel -u dtb17 -p gcb
-# ALL in partition ``` `squeue` will give you pending (to be done), running, and
+```bash
+scancel JOBID                                       # specific job
+scancel -u dtb17                                    # ALL my jobs
+scancel -u dtb17 -J many_blast_jobs                 # named jobs
+scancel -u dtb17 -p gcb # ALL in partition
+```
+
+`squeue` will give you pending (to be done), running, and
 recently completed job info. Some examples:
 
-```bash squeue -u dtb17                                     # jobs for dtb17
-squeue -u dtb17 --states=R | wc –l                  # # of Running jobs ```
+```bash
+squeue -u dtb17                                     # jobs for dtb17
+squeue -u dtb17 --states=R | wc –l                  # # of Running jobs
+```
 
 `sacct` will give you current and historical information, since time began or
 you were an HPC-infant, whichever came first. More examples:
 
-```bash sacct -u dtb17                                      # jobs for dtb17
+```bash
+sacct -u dtb17                                      # jobs for dtb17
 sacct -u dtb17 -p common --starttime=9/1/15         # same+common partition
-sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed # RAM requested &
-used!!  ```
+sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed # RAM requested & used!!
+```
 
 * Run `dscr_mem_kill.sbatch`
 * Lines with and without srun
@@ -484,9 +520,15 @@ used!!  ```
 * Kill signals
 * SIGKILL is 9 and SIGTERM is 15
 
-##### Running a job array ```bash #!/bin/bash # #SBATCH
---output=bedtools_%A_%a.out #SBATCH --error=bedtools_%A_%a.err # Standard error
-#SBATCH --job-name=bedtools_array #SBATCH --time=10:00 #SBATCH --mem=1000
+##### Running a job array
+```bash
+#!/bin/bash
+#
+#SBATCH --output=bedtools_%A_%a.out
+#SBATCH --error=bedtools_%A_%a.err # Standard error
+#SBATCH --job-name=bedtools_array
+#SBATCH --time=10:00
+#SBATCH --mem=1000
 #SBATCH --array=0-4
 
 inputs=(CellCiptapContigs.bedRnaElements CellContigs.bedRnaElements
@@ -497,9 +539,15 @@ bed_file=${inputs[$TASK_ID]} sorted_bed_file=$(basename $bed_file).sort.bed srun
 sleep 30 srun sort -k1,1 -k2,2n cshl_rna_seq/$bed_file >
 cshl_rna_seq/$sorted_bed_file srun
 /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i
-cshl_rna_seq/$sorted_bed_file ``` ##### Job failures
-* Emails on job failure ```bash #SBATCH --mail-user=darren.boss@duke.edu #SBATCH
-  --mail-type=FAIL ```
+cshl_rna_seq/$sorted_bed_file
+```
+
+##### Job failures
+* Emails on job failure
+```bash
+#SBATCH --mail-user=darren.boss@duke.edu
+#SBATCH --mail-type=FAIL
+```
 * Mail-type can be set to BEGIN, END, FAIL, REQUEUE, and ALL
 * Run memory job
 
