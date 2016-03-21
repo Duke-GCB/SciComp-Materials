@@ -111,16 +111,16 @@ Why do we get chromsome 1, 10, 11, 12, etc? Use the `-w` flag to get full words.
 
 We can use more complex patterns with `grep` (and other tools) by using *regular expressions*. For example, to find both chromosome X and Y:
 
-	$ cat CellContigs.bedRnaElements | grep chr[XY]
+	$ grep chr[XY] CellContigs.bedRnaElements
 
 ### Extra stuff
 If there is time, you can show more regex examples:
 
-    $ grep [unannotated] CellContigs.bedRnaElements
+    $ grep CellContigs.bedRnaElements | grep chr[0-9]
 
-    $ cat CellContigs.bedRnaElements | grep chr[0-9]
+    $ grep CellContigs.bedRnaElements | grep chr[A-Z]
 
-    $ cat CellContigs.bedRnaElements | grep chr[A-Z]
+    $ grep chrY:[23] CellContigs.bedRnaElements
 
 
 ## Loops
