@@ -415,7 +415,9 @@ at /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools on the DSCR.
     checked out
   * Don't forget to enter your email address in the script
 
-#### JOB STATE CODES ```bash squeue Jobs  typically  pass  through  several
+#### JOB STATE CODES
+```bash
+squeue Jobs  typically  pass  through  several
 states  in the course of their execution.   The  typical  states  are  PENDING,
 RUNNING,   SUSPENDED, COMPLETING, and COMPLETED.  An explanation of each state
 follows.
