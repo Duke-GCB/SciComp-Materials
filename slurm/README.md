@@ -165,12 +165,10 @@ this is not backed and files are deleted after an aged period of time "
 * Show an rsync example
 * rsync -a cshl_rna_seq dtb17@dscr-slogin-01.oit.duke.edu:
 * show verbose and dry-run as well
-* use curl and wget to download a file from
-  * `wget
-    [https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)`
+* use curl and wget to download a file from [https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_r](https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_r)
+  * `wget https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
 
-  * `curl -O
-    [https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)`
+  * `curl -O https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
 
 ## Using & installing software 
 
@@ -236,7 +234,7 @@ following resources:
 
 ```bash
 --pty           # a parameter specific for the srun command for bash sessions
---mem 1000      # memory request, in MB /bin/bash
+--mem 1000      # memory request, in MB
 /bin/bash       # the program we want to run, which is the bash shell
 ```
 
@@ -303,14 +301,16 @@ reservation at a restaurant:
 to see what command-line options are available and what default parameters are
 being used” -- acgt.me · by Keith Bradnam
 
-#### Time This is determined by test runs that you do on your code during an
+#### Time
+This is determined by test runs that you do on your code during an
 interactive session.  Or, if you submit a batch job, over-ask first, check the
 amount of time actually needed, then reduce time on later runs.
 
 **Please!** Due to scheduler overhead, bundle commands for minimum of 10 minutes
 / job
 
-#### Memory: We recommend that you check the software docs for memory
+#### Memory
+We recommend that you check the software docs for memory
 requirements. But often times these are not stated, so we can take another
 approach. On HARDAC and on the DSCR, each job is allowed 2 GB RAM/core by
 default. Try the default via `srun` or `sbatch`. If your job was killed, look at
@@ -343,7 +343,6 @@ nodes. If they are capable, they will mention the use of technology called 'MPI'
 or 'openMPI'.
 
 #### Partitions (Queues)
-
 Partitions, or queue, are a grouping of computer to run a certain profile or
 jobs. Historically, partitions on the DSCR were used to give priority access to
 those schools, institutes and centers that paid into buying hardware for the
@@ -354,7 +353,6 @@ HARDAC used to have high and low memory partitions but this introduced a
 unnessesary barrier in scheduling jobs so it was removed.
 
 ### Creating submission scripts
-
 When creating submission scripts, use your favorite text editor and include the
 following sections:
 
@@ -382,12 +380,11 @@ All the scheduler directives need to be at the start of the file, then your
 module/software loads, and then your actual job commands.
 
 ### Example batch script (SLURM)
-
 The following is an example submission script for an example `bedtools` run,
 which is a single-core program. See
 [http://bedtools.readthedocs.org/en/latest/content/tools/merge.html](http://bedtools.readthedocs.org/en/latest/content/tools/merge.html)
 and
-[http://quinlanlab.org/tutorials/cshl2014/bedtools.html](http://quinlanlab.org/tutorials/cshl2014/bedtools.html)
+[http://quinlanlab.org/tutorials/bedtools/bedtools.html#bedtools-merge](http://quinlanlab.org/tutorials/bedtools/bedtools.html#bedtools-merge)
 for an explanation of the bedtools merge command:
 
 ```bash
@@ -447,7 +444,8 @@ follows.
        S   SUSPENDED       Job  has  an  allocation,  but  execution  has been
        suspended.
 
-       TO  TIMEOUT         Job terminated upon reaching its time limit.  ```
+       TO  TIMEOUT         Job terminated upon reaching its time limit.
+```
 
 #### Node states
 
@@ -457,27 +455,34 @@ ALLOCATED The node has been allocated to one or more jobs.
 COMPLETING All jobs associated with this node are in the process of COMPLETING.
 This node state will be removed when all of the job's processes have terminated
 and the SLURM epilog program (if any) has terminated. See the Epilog parameter
-description in the slurm.conf man page for more information.  DOWN The node is
+description in the slurm.conf man page for more information.
+DOWN The node is
 unavailable for use. SLURM can automatically place nodes in this state if some
 failure occurs. System administrators may also explicitly place nodes in this
 state. If a node resumes normal operation, SLURM can automatically return it to
 service. See the ReturnToService and SlurmdTimeout parameter descriptions in the
-slurm.conf(5) man page for more information.  DRAINED The node is unavailable
+slurm.conf(5) man page for more information.
+DRAINED The node is unavailable
 for use per system administrator request. See the update node command in the
 scontrol(1) man page or the slurm.conf(5) man page for more information.
 DRAINING The node is currently executing a job, but will not be allocated to
 additional jobs. The node state will be changed to state DRAINED when the last
 job on it completes. Nodes enter this state per system administrator request.
 See the update node command in the scontrol(1) man page or the slurm.conf(5) man
-page for more information.  FAIL The node is expected to fail soon and is
+page for more information.
+FAIL The node is expected to fail soon and is
 unavailable for use per system administrator request. See the update node
 command in the scontrol(1) man page or the slurm.conf(5) man page for more
-information.  FAILING The node is currently executing a job, but is expected to
+information.
+FAILING The node is currently executing a job, but is expected to
 fail soon and is unavailable for use per system administrator request. See the
 update node command in the scontrol(1) man page or the slurm.conf(5) man page
-for more information.  IDLE The node is not allocated to any jobs and is
-available for use.  MAINT The node is currently in a reservation with a flag
-value of "maintainence".  UNKNOWN The SLURM controller has just started and the
+for more information.
+IDLE The node is not allocated to any jobs and is
+available for use.
+MAINT The node is currently in a reservation with a flag
+value of "maintainence".
+UNKNOWN The SLURM controller has just started and the
 node's state has not yet been determined.
 ```
 ### Managing jobs and getting job information
@@ -493,7 +498,7 @@ can forget about this command) Here are a few examples of `scancel` in action:
 scancel JOBID                                       # specific job
 scancel -u dtb17                                    # ALL my jobs
 scancel -u dtb17 -J many_blast_jobs                 # named jobs
-scancel -u dtb17 -p gcb # ALL in partition
+scancel -u dtb17 -p gcb                             # ALL in partition
 ```
 
 `squeue` will give you pending (to be done), running, and
@@ -531,15 +536,12 @@ sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed # RAM requested & us
 #SBATCH --mem=1000
 #SBATCH --array=0-4
 
-inputs=(CellCiptapContigs.bedRnaElements CellContigs.bedRnaElements
-CytosolCiptapContigs.bedRnaElements CytosolContigs.bedRnaElements
-NucleusContigs.bedRnaElements)
+inputs=(CellCiptapContigs.bedRnaElements CellContigs.bedRnaElements CytosolCiptapContigs.bedRnaElements CytosolContigs.bedRnaElements NucleusContigs.bedRnaElements)
 
-bed_file=${inputs[$TASK_ID]} sorted_bed_file=$(basename $bed_file).sort.bed srun
-sleep 30 srun sort -k1,1 -k2,2n cshl_rna_seq/$bed_file >
-cshl_rna_seq/$sorted_bed_file srun
-/opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i
-cshl_rna_seq/$sorted_bed_file
+bed_file=${inputs[$TASK_ID]} sorted_bed_file=$(basename $bed_file).sort.bed
+srun sleep 30
+srun sort -k1,1 -k2,2n cshl_rna_seq/$bed_file > cshl_rna_seq/$sorted_bed_file
+srun /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i cshl_rna_seq/$sorted_bed_file
 ```
 
 ##### Job failures
@@ -552,12 +554,12 @@ cshl_rna_seq/$sorted_bed_file
 * Run memory job
 
 ##### How to get help and training
-* If you don't have access to the DSCR, check the point of contact list and
+* If you don't have access to the DCC, check the point of contact list and
   request access if you are able
   [https://wiki.duke.edu/display/SCSC/DSCR+Point+of+Contact+list](https://wiki.duke.edu/display/SCSC/DSCR+Point+of+Contact+list)
 * make sure to always give your netid, jobid and any error messages when
-* for DSCR help contact help@oit.duke.edu and make sure to indicate you are
-  requesting assistance on the DSCR
+* for DCC help contact help@oit.duke.edu and make sure to indicate you are
+  requesting assistance on the DCC
 * HARDAC support email gcb-help@duke.edu
 * Training at Duke
   [https://training.oit.duke.edu/enroll/index.php/public_research](https://training.oit.duke.edu/enroll/index.php/public_research)
@@ -569,7 +571,7 @@ cshl_rna_seq/$sorted_bed_file
 
 #### Other resources
 * HPC offerings:
-  * DSCR: https://wiki.duke.edu/display/SCSC/DSCR
+  * DCC: https://rc.duke.edu/the-duke-compute-cluster/
   * HARDAC: https://wiki.duke.edu/display/HAR/Welcome+to+HARDAC
   * XSEDE: https://www.xsede.org/high-performance-computing
 * Cloud computing offerings:
@@ -577,4 +579,4 @@ cshl_rna_seq/$sorted_bed_file
   * Amazon EC2: http://aws.amazon.com/ec2/
   * Microsoft Azure: https://azure.microsoft.com/en-us/
   * Google Cloud Platform: https://cloud.google.com/
-  * iPlant's Atmosphere: http://www.iplantcollaborative.org/ci/atmosphere
+  * CyVerse Atmosphere: http://www.cyverse.org/atmosphere
