@@ -168,8 +168,8 @@ this is not backed and files are deleted after an aged period of time "
 * Perform a recursive scp of the cshl_rna_seq directory
   * scp -r cshl_rna_seq netid@dscr-slogin-01.oit.duke.edu
 * Show an rsync example
-* rsync -a cshl_rna_seq dtb17@dscr-slogin-01.oit.duke.edu:
-* show verbose and dry-run as well
+  * rsync -a cshl_rna_seq dtb17@dscr-slogin-01.oit.duke.edu:
+  * show verbose and dry-run as well
 * use curl and wget to download a file from [https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)
   * `wget https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements`
 
@@ -188,18 +188,6 @@ module load Anaconda
 python --version
 module purge
 python --version
-```
-
-*For Perl & Python module or R packages*, we encourage you to set up directories
-in your home and/or lab folder for installing your own copies locally.
-
-*If software you need is not installed*, we encourage you to do local installs
-in your home or lab folder for bleeding-edge releases, software you are testing,
-or software used only by your lab.
-
-Depending on the nature of the software and the experience of the software
-developers that created the software distribution it can be a very time
-consuming procedure to deploy software on the cluster.
 
 ## Working with the scheduler
 
@@ -264,9 +252,9 @@ In all cases, the scheduler will return to you a jobID, a unique ID for your job
 that you can use to get info or control at that time, or refer to it
 historically.
 
-### Choosing the proper resources for your job For both foreground and
-background submissions, you are requesting resources from the scheduler to run
-your job. These are:
+### Choosing the proper resources for your job
+For both foreground and background submissions, you are requesting resources
+from the scheduler to run your job. These are:
 * time
 * memory
 * number of cores (CPUs)
@@ -556,7 +544,7 @@ you should limit the number of simultaneous jobs.
 ```bash
 sbatch --array=0-4%2 bedtools_array.sh
 ```
-## Installing software 
+## Installing software
 
 *For Perl & Python module or R packages*, we encourage you to set up directories
 in your home and/or lab folder for installing your own copies locally.
