@@ -189,6 +189,7 @@ module load Anaconda
 python --version
 module purge
 python --version
+```
 
 ## Working with the scheduler
 
