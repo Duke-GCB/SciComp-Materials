@@ -171,9 +171,9 @@ this is not backed and files are deleted after an aged period of time "
 * rsync -a cshl_rna_seq dtb17@dscr-slogin-01.oit.duke.edu:
 * show verbose and dry-run as well
 * use curl and wget to download a file from [https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)
-  * `wget https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
+  * `wget https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements`
 
-  * `curl -O https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
+  * `curl -O https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements`
 
 ## Locating software
 
@@ -181,7 +181,8 @@ On the DSCR you will find commonly used scientific applications installed under
 /opt/apps. On other clusters tools like *Lmod* are commonly used to allow access
 to applications.
 
-```bash python --version
+```bash
+python --version
 module avail
 module load Anaconda
 python --version
@@ -268,8 +269,8 @@ background submissions, you are requesting resources from the scheduler to run
 your job. These are:
 * time
 * memory
-* # of cores (CPUs)
-* # of nodes
+* number of cores (CPUs)
+* number of nodes
 * (sort of) queue or group of machines to use
 
 Choosing resources is like playing a game with the scheduler: You want to
@@ -288,9 +289,9 @@ reservation at a restaurant:
   seats are wasted; no one else can take the empty places, and the restaurant
   may lose money.
 
-“Never use a piece of bioinformatics software for the first time without looking
+"Never use a piece of bioinformatics software for the first time without looking
 to see what command-line options are available and what default parameters are
-being used” -- acgt.me · by Keith Bradnam
+being used" -- acgt.me · by Keith Bradnam
 
 #### Time
 This is determined by test runs that you do on your code during an
@@ -315,7 +316,7 @@ Once the job has finished, ask the scheduler how much RAM was used by using the
 used. Now go back and adjust your RAM request in your sbatch command or
 submission script.
 
-#### # of Cores
+#### Number of Cores
 This is determined by your software, how anxious you are to get
 the work done, and how well your code scales. **NOTE! Throwing more cores at a
 job does not make it run faster!** This is often a newbie mistake and will waste
@@ -327,7 +328,7 @@ slowing from 1 to 2, 4, 8, etc, assessing the decrease in time for the job run
 as you increase cores. Programs often do not scale well -- it's important to
 understand this so you can choose the appropriate number.
 
-#### # of Nodes
+#### Number of Nodes
 For most software in biology, this choice is simple: 1. There
 are *very* few biology softare packages capable of running across multiple
 nodes. If they are capable, they will mention the use of technology called 'MPI'
@@ -355,8 +356,8 @@ following sections:
 **Recommended**
 * Partition to submit to (comma separated)
 * job name
-* # of cores
-* # of nodes
+* number of cores
+* number of nodes
 * amount of time
 * amount of memory
 * STDOUT file
@@ -382,8 +383,9 @@ for an explanation of the bedtools merge command:
 #!/bin/bash
 #
 #SBATCH -p common              # Partition to submit to (comma separated)
-#SBATCH -J gcb_bedtools        # Job name #SBATCH -n 1
-# Number of cores #SBATCH -N 1 # Ensure that all cores are on one machine
+#SBATCH -J gcb_bedtools        # Job name
+#SBATCH -n 1                   # Number of cores
+#SBATCH -N 1                   # Ensure that all cores are on one machine
 #SBATCH -t 0-0:10              # Runtime in D-HH:MM (or use minutes)
 #SBATCH --mem 1000             # Memory in MB
 #SBATCH -o bedtools_%j.out     # File for STDOUT (with jobid = %j)
@@ -399,12 +401,14 @@ at /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools on the DSCR.
 * In an interactive session
   * Sort an import bed file using the suggestions for using sort in the above
     tutorial
-  * Run bedtools merge on the sorted bedfile
+  * Run bedtools merge on the sorted bedfile using the tutorial
 * Combine the above slrum template with the command and submit the job as a
   batch job
   * There is a template in the slurm folder in the git repository you just
     checked out
+  * Copy the template to a new file to make the changes
   * Don't forget to enter your email address in the script
+* Use diff to compare the input and output files
 
 #### JOB STATE CODES
 ```bash
@@ -499,7 +503,7 @@ recently completed job info. Some examples:
 
 ```bash
 squeue -u dtb17                                     # jobs for dtb17
-squeue -u dtb17 --states=R | wc –l                  # # of Running jobs
+squeue -u dtb17 --states=R | wc -l                  # number of Running jobs
 ```
 
 `sacct` will give you current and historical information, since time began or
@@ -519,6 +523,14 @@ sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed # RAM requested & us
 * SIGKILL is 9 and SIGTERM is 15
 
 ##### Running a job array
+
+When we want to run an analysis across many input files we can use job
+arrays. Here we use the previous script template we wrote for using
+bedtool merge on just one file and with a few changes we can run merge
+across the entire directory of bed files. Not only do we run the merge
+on all the files but tasks in the array job are running on multiple
+servers and likely simultaneously.
+
 ```bash
 #!/bin/bash
 #
@@ -529,25 +541,22 @@ sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed # RAM requested & us
 #SBATCH --mem=1000
 #SBATCH --array=0-4
 
-inputs=(CellCiptapContigs.bedRnaElements CellContigs.bedRnaElements CytosolCiptapContigs.bedRnaElements CytosolContigs.bedRnaElements NucleusContigs.bedRnaElements)
-
-bed_file=${inputs[$TASK_ID]} sorted_bed_file=$(basename $bed_file).sort.bed
+FILES=($(ls -1 cshl_rna_seq/*bed*))
+bed_file=${inputs[$TASK_ID]}
+sorted_bed_file=$(basename $bed_file).sort.bed
 srun sleep 30
-srun sort -k1,1 -k2,2n cshl_rna_seq/$bed_file > cshl_rna_seq/$sorted_bed_file
-srun /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i cshl_rna_seq/$sorted_bed_file
+srun sort -k1,1 -k2,2n $bed_file > $sorted_bed_file
+srun /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i $sorted_bed_file
 ```
-## Using & installing software 
 
-On the DSCR you will find commonly used scientific applications installed under
-/opt/apps. On other clusters tools like *Lmod* are commonly used to allow access
-to applications.
+When submitting a large number of jobs, particularly jobs that consume
+a large amount of memory or are have particularly high disk utilization
+you should limit the number of simultaneous jobs.
 
-```bash python --version
-   module avail
-   module load Anaconda
-   python --version
-   module purge
-   python --version ```
+```bash
+sbatch --array=0-4%2 bedtools_array.sh
+```
+## Installing software 
 
 *For Perl & Python module or R packages*, we encourage you to set up directories
 in your home and/or lab folder for installing your own copies locally.

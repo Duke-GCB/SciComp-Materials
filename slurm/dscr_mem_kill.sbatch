@@ -7,5 +7,5 @@
 
 srun echo "Starting memory allocation"
 srun sleep 5
-srun ./memalloc 512 15
+srun ~/bin/memalloc 512 15
 srun echo "Program completed"
