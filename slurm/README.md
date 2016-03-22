@@ -212,7 +212,9 @@ up resources (e.g. CPU- or memory-intensive tasks).
 To get an interactive session, you issue the `srun` command with the appropriate
 parameters for requesting the resources you require. For example:
 
-```bash srun --pty --mem 1000 /bin/bash ```
+```bash
+srun --pty --mem 1000 /bin/bash
+```
 
 This command requests from the scheduler a foreground/interactive job with the
 following resources:
