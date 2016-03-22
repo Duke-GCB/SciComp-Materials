@@ -503,7 +503,6 @@ you were an HPC-infant, whichever came first. More examples:
 
 ```bash
 sacct -u dtb17                                      # jobs for dtb17
-sacct -u dtb17 -p common --starttime=9/1/15         # same+common partition
 sacct -j JOBID --format=JobID,JobName,ReqMem,MaxRSS,Elapsed # RAM requested & used!!
 ```
 
