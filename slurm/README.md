@@ -90,7 +90,12 @@ for in-job execution (working or scratch areas)
 * Make note of how much memory and cpu core are on the login node
   * Command to count of number of cpu cores is `nproc` and querying the amount
     of memory is `free -g`
-* Run an interactive job ```squeue --pty bash```
+* Run an interactive job ```squeue --pty bash -i```
+  * Run the same commands, nproc, free -g, hostname and compare the results from
+  our previous output
+  * Run commands from the bash tutorial from the previous day, ls, pwd, cd
+* Open a second shell and connect to the cluster
+* Use squeue to examine the state of jobs on the cluster
 
 ## Filesystems and Storage
 
@@ -157,8 +162,7 @@ this is not backed and files are deleted after an aged period of time "
   how is this possible?
 * What filesystem are you currently on? Can you figure that out?
 * Use the `df .` command or `df -h .` for human readable output.
-* Change to /work and /datacommons/netscratch directory and try the
-  command again
+* Change to /work directory and try the command again
 * On your local system, cd to the directory one level up from where the bed
   files are located
 * Perform a recursive scp of the cshl_rna_seq directory
@@ -171,7 +175,7 @@ this is not backed and files are deleted after an aged period of time "
 
   * `curl -O https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
 
-## Using & installing software 
+## Locating software
 
 On the DSCR you will find commonly used scientific applications installed under
 /opt/apps. On other clusters tools like *Lmod* are commonly used to allow access
@@ -194,18 +198,6 @@ or software used only by your lab.
 Depending on the nature of the software and the experience of the software
 developers that created the software distribution it can be a very time
 consuming procedure to deploy software on the cluster.
-
-**Exercises**
-
-* The Samtools version on the DSCR is lacking a feature that you want to use
-* Download the Samtools source code to your home directory
-* Don't download it to your laptop first, use the wget or curl command to
-  download it directly to the cluster
-* Extract the source tarball
-  * `tar xvfj samtools-1.2.tar.bz2`
-* Compiling source code and be a resource intensive process so lets all by good
-  citizens and extract and compile the source code on a compute node of the
-  cluster
 
 ## Working with the scheduler
 
@@ -256,11 +248,8 @@ sbatch --mem=1000 --wrap="uname -a; free -g; nproc"
 ```
 
 **Exercise**
-* Submit a batch job to extract the samtools archive
-  * The command to extract bz2 archives in the current directory is `tar xvfj
-    filename`
-* Start an interactive job and follow the instructions on the htslib website on
-  how to compile and install samtools
+* Submit a batch job to run some other commands we ran from the bash
+tutorial
 
 The other way is to create a batch submission script file, which has these
 parameters embedded inside, and submit your script to the scheduler:
@@ -315,7 +304,7 @@ We recommend that you check the software docs for memory
 requirements. But often times these are not stated, so we can take another
 approach. On HARDAC and on the DSCR, each job is allowed 2 GB RAM/core by
 default. Try the default via `srun` or `sbatch`. If your job was killed, look at
-the log files or immediately with squeue. If it show a memory error, you went
+the output files or immediately with squeue. If it show a memory error, you went
 over. Ask for more and try again.
 
 Once the job has finished, ask the scheduler how much RAM was used by using the
@@ -546,6 +535,41 @@ srun sleep 30
 srun sort -k1,1 -k2,2n cshl_rna_seq/$bed_file > cshl_rna_seq/$sorted_bed_file
 srun /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i cshl_rna_seq/$sorted_bed_file
 ```
+## Using & installing software 
+
+On the DSCR you will find commonly used scientific applications installed under
+/opt/apps. On other clusters tools like *Lmod* are commonly used to allow access
+to applications.
+
+```bash python --version
+   module avail
+   module load Anaconda
+   python --version
+   module purge
+   python --version ```
+
+*For Perl & Python module or R packages*, we encourage you to set up directories
+in your home and/or lab folder for installing your own copies locally.
+
+*If software you need is not installed*, we encourage you to do local installs
+in your home or lab folder for bleeding-edge releases, software you are testing,
+or software used only by your lab.
+
+Depending on the nature of the software and the experience of the software
+developers that created the software distribution it can be a very time
+consuming procedure to deploy software on the cluster.
+
+**Exercises**
+
+* The Samtools version on the DSCR is lacking a feature that you want to use
+* Download the Samtools source code to your home directory
+* Don't download it to your laptop first, use the wget or curl command to
+  download it directly to the cluster
+* Extract the source tarball
+  * `tar xvfj samtools-1.2.tar.bz2`
+* Compiling source code and be a resource intensive process so lets all by good
+  citizens and extract and compile the source code on a compute node of the
+  cluster
 
 ##### Job failures
 * Emails on job failure
