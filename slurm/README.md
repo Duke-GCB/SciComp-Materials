@@ -36,7 +36,7 @@ date: "Tuesday, October 10, 2015"
 * Copying data to a remote server
 * Using ssh to connect to remote computers
 * Interacting with the job scheduler
-* Understand batch script options how how to submit jobs
+* Understand batch script options and how to submit jobs
 
 Note: A large portion of this material was taken from a Data Carpentry workshop
 taught at a Harvard FAS Research Computing Genomics workshop last year.
@@ -85,11 +85,12 @@ for in-job execution (working or scratch areas)
 **Exercises**
 * ssh into the DSCR, using the dscr-slogin-02.oit.duke.edu login node
 * Use the scheduler command `sinfo` to inspect your local cluster. Confer with
-  your neighbor. What is going on here?
+  your neighbor. Can you make any sense of the data being returned.
 * Try using the `sinfo --long` command. Any more insights?
 * Make note of how much memory and cpu core are on the login node
   * Command to count of number of cpu cores is `nproc` and querying the amount
     of memory is `free -g`
+* Run an interactive job ```squeue --pty bash```
 
 ## Filesystems and Storage
 
@@ -165,7 +166,7 @@ this is not backed and files are deleted after an aged period of time "
 * Show an rsync example
 * rsync -a cshl_rna_seq dtb17@dscr-slogin-01.oit.duke.edu:
 * show verbose and dry-run as well
-* use curl and wget to download a file from [https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_r](https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_r)
+* use curl and wget to download a file from [https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements](https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements)
   * `wget https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
 
   * `curl -O https://raw.githubusercontent.com/Duke-GCB/SciComp-Materials/master/materials/cshl_rna_seq/CellCiptapContigs.bedRnaElements
