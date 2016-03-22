@@ -182,11 +182,12 @@ On the DSCR you will find commonly used scientific applications installed under
 to applications.
 
 ```bash python --version
-   module avail
-   module load Anaconda
-   python --version
-   module purge
-   python --version ```
+module avail
+module load Anaconda
+python --version
+module purge
+python --version
+```
 
 *For Perl & Python module or R packages*, we encourage you to set up directories
 in your home and/or lab folder for installing your own copies locally.
