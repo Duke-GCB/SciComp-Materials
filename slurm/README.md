@@ -386,8 +386,7 @@ for an explanation of the bedtools merge command:
 #SBATCH --mail-user=EMAIL@duke.edu  # Email where notifications will be sent
 #Your actual work goes after this line
 ```
-The bedtools executatble is located
-at /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools on the DSCR.
+The bedtools executatble is located at /opt/apps/bedtools2-2.19.1/bin/bedtools on the DSCR.
 **Exercises**
 * Clone the materials git repository from your github account on the DSCR
 * In an interactive session
@@ -537,7 +536,7 @@ bed_file=${inputs[$TASK_ID]}
 sorted_bed_file=$(basename $bed_file).sort.bed
 srun sleep 30
 srun sort -k1,1 -k2,2n $bed_file > $sorted_bed_file
-srun /opt/apps/sdg/nextgen/tools/BEDTools-Version-2.16.2/bin/bedtools merge -i $sorted_bed_file
+srun /opt/apps/bedtools2-2.19.1/bin/bedtools merge -i $sorted_bed_file
 ```
 
 When submitting a large number of jobs, particularly jobs that consume
